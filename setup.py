@@ -7,7 +7,7 @@ def main():
     description = 'fast dtw for python'
 
     setup(
-        name='py_fast_dtw',
+        name='pyfastdtw',
         # version=__version__,
         # author=__author__,
         author_email='',
@@ -18,10 +18,12 @@ def main():
         include_package_data=True,
         packages=find_packages(),
         install_requires=[
-            
+            "numpy",
+            "matplotlib",
+            "seaborn"
         ],
         dependency_links = [
-            
+
         ],
         tests_require=[],
         setup_requires=[],

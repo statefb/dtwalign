@@ -2,3 +2,4 @@ __pycache__
 /pyfastdtw.egg-info/
 /build/
 /dist/
+/test/
