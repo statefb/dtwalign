@@ -18,7 +18,7 @@ class TestDistance(unittest.TestCase):
         x1 += np.random.rand(x1.size)
         y1 = np.sin(2*np.pi*3.1*np.linspace(0,1,101))
         y1 += np.random.rand(y1.size)
-        self.X1 = x1[:,np.newaxis].dot(y1[np.newaxis,:])
+        self.X1 = x1[:,np.newaxis] - y1[np.newaxis,:]
         # self.X0 = self.X1
         self.X2 = self.X1
 

@@ -37,6 +37,7 @@ class BasePattern():
         graph_layout = dict()
         edge_labels = dict()
         node_names = []
+        # set node
         for pidx,pat in enumerate(self.pattern_info):
             step_len = len(pat["indices"])
             nn = []
@@ -47,6 +48,7 @@ class BasePattern():
                     np.array(pat["indices"][sidx])
                 nn.append(node_name)
             node_names.append(nn)
+        # set edge
         for pidx,pat in enumerate(self.pattern_info):
             step_len = len(pat["indices"])
             for sidx in range(step_len-1):
@@ -152,8 +154,6 @@ class SymmetricP1(BasePattern):
 
     def __init__(self):
         super().__init__()
-
-
 
 class SymmetricP2(BasePattern):
     label = "symmetricP2"

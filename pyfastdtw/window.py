@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import numpy as np
+import matplotlib.pyplot as plt
 import seaborn as sns
 
 class BaseWindow():
@@ -11,6 +12,8 @@ class BaseWindow():
         plt.figure()
         sns.heatmap(self.matrix,vmin=0,vmax=1)
         plt.title(self.label)
+        plt.xlabel("query index")
+        plt.ylabel("reference index")
         plt.show()
 
 

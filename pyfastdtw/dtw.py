@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from .cost import _calc_cumsum_matrix_py,_calc_cumsum_matrix
+from .cost import _calc_cumsum_matrix_py,_calc_cumsum_matrix_jit
 from .step_pattern import *
 from .window import *
 from .result import DtwResult
@@ -35,7 +35,7 @@ def dtw_low(X,window,pattern,dist_only=True,fast=True,\
     # naive implementation
     D = _calc_cumsum_matrix_py(X,window,pattern)
     # fast implementation
-    # D = _calc_cumsum_matrix(X,window.array,pattern.array,fast)
+    # D = _calc_cumsum_matrix_jit(X,window.array,pattern.array,fast)
 
     if dist_only:
         path = None
