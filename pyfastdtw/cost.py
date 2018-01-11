@@ -28,7 +28,7 @@ def _calc_cumsum_matrix_py(X,window,pattern):
     p_ar = pattern.array
     # pattern cost
     pattern_cost = np.zeros(pattern.num_pattern)
-    # sequence cost
+    # step cost
     step_cost = np.zeros(pattern.max_pattern_len)
 
     for i,j in window.list:

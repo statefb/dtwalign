@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 import numpy as np
+import matplotlib.pyplot as plt
+import networkx as nx
 
 _MAX = np.iinfo(int).max
 
@@ -15,8 +17,46 @@ class BasePattern():
         self._get_array()
 
     def plot(self):
-        #TODO
-        raise NotImplementedError()
+        plt.figure()
+        if not hasattr(self,"_graph"):
+            self._gen_graph()
+        nx.draw_networkx_nodes(self._graph,\
+            pos=self._graph_layout)
+        nx.draw_networkx_edges(self._graph,\
+            pos=self._graph_layout)
+        nx.draw_networkx_edge_labels(self._graph,\
+            pos=self._graph_layout,
+            edge_labels=self._edge_labels)
+        plt.title(self.label + str(" pattern"))
+        plt.xlabel("query index")
+        plt.ylabel("reference index")
+        plt.show()
+
+    def _gen_graph(self):
+        graph = nx.DiGraph()
+        graph_layout = dict()
+        edge_labels = dict()
+        node_names = []
+        for pidx,pat in enumerate(self.pattern_info):
+            step_len = len(pat["indices"])
+            nn = []
+            for sidx in range(step_len):
+                node_name = str(pidx) + str(sidx)
+                graph.add_node(node_name)
+                graph_layout[node_name] = \
+                    np.array(pat["indices"][sidx])
+                nn.append(node_name)
+            node_names.append(nn)
+        for pidx,pat in enumerate(self.pattern_info):
+            step_len = len(pat["indices"])
+            for sidx in range(step_len-1):
+                graph.add_edge(node_names[pidx][sidx],
+                    node_names[pidx][sidx+1])
+                edge_labels[(node_names[pidx][sidx],
+                    node_names[pidx][sidx+1])] = pat["weights"][sidx]
+        self._graph = graph
+        self._graph_layout = graph_layout
+        self._edge_labels = edge_labels
 
     def _get_array(self):
         """
@@ -50,6 +90,7 @@ class BasePattern():
         return self.normalize_guide != "none"
 
 class Symmetric1(BasePattern):
+    label = "symmetric1"
     pattern_info = [
         dict(
             indices=[(-1,0),(0,0)],
@@ -70,6 +111,7 @@ class Symmetric1(BasePattern):
         super().__init__()
 
 class Symmetric2(BasePattern):
+    label = "symmetric2"
     pattern_info = [
         dict(
             indices=[(-1,0),(0,0)],
@@ -91,6 +133,7 @@ class Symmetric2(BasePattern):
 
 
 class SymmetricP1(BasePattern):
+    label = "symmetricP1"
     pattern_info = [
         dict(
             indices=[(-2,-1),(-1,0),(0,0)],
@@ -113,6 +156,7 @@ class SymmetricP1(BasePattern):
 
 
 class SymmetricP2(BasePattern):
+    label = "symmetricP2"
     pattern_info = [
         dict(
             indices=[(-3,-2),(-2,-1),(-1,0),(0,0)],
