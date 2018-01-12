@@ -20,8 +20,9 @@ def main():
         install_requires=[
             "numpy",
             "matplotlib",
-            "seaborn",
-            "networkx"
+            "seaborn >= 0.8.1",
+            "networkx",
+            "numba >= 0.36.2"
         ],
         dependency_links = [
 

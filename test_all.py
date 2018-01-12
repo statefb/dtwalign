@@ -44,7 +44,7 @@ for pattern in patterns:
     x1w = x1[xp]
     y1w = y1[yp]
 
-    # plot warped data
+    # plot warped data(both)
     plt.figure()
     plt.plot(x1w)
     plt.plot(y1w)

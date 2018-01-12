@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from .cost import _calc_cumsum_matrix_py,_calc_cumsum_matrix_jit
-from .backtrack import _backtrack_py
+from .backtrack import _backtrack_py,_backtrack_jit
 from .step_pattern import *
 from .window import *
 from .result import DtwResult
@@ -57,7 +57,9 @@ def dtw_low(X,window,pattern,dist_only=False,fast=True,\
         path = None
     else:
         # naive
-        path = _backtrack_py(D,pattern)
+        # path = _backtrack_py(D,pattern)
+        # fast
+        path = _backtrack_jit(D,pattern.array)
 
     result = DtwResult(D,path,window,pattern)
 
