@@ -1,6 +1,6 @@
 # fast-dtw for Python test
 
 TODO:
-* backtrack
+* warp function (output warp index)
 * openend,openbigin
 * fastdtw
