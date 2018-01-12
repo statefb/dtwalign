@@ -7,9 +7,9 @@ class DtwResult():
     def __init__(self,cumsum_matrix,path,window,pattern):
         self.cumsum_matrix = cumsum_matrix
         if path is None:
-            self.only_distance = True
+            self.dist_only = True
         else:
-            self.only_distance = False
+            self.dist_only = False
             self.path = path
         self._window = window
         self._pattern = pattern
@@ -53,7 +53,7 @@ class DtwResult():
             "cum" : cumsum matrix
 
         """
-        if self.distance_only:
+        if self.dist_only:
             raise Exception("alignment path not calculated.")
         _,ax = plt.subplots(1)
         if with_ is None:
