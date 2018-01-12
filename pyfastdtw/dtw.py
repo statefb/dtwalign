@@ -9,6 +9,9 @@ def dtw(x,y,dist,window_type,window_size,step_pattern="symmetric2",\
     dist_only=True,fast=True,open_begin=False,open_end=False):
     """
     high-level dtw interface
+    TODO:
+    ・x,y,distの代わりにXを受け取るようにできる
+    ・window関数，マトリクスを受け取るようにできる
     """
     # get pair-wise cost matrix
     # X = dist(x,y)

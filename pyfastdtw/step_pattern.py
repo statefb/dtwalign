@@ -16,8 +16,12 @@ class BasePattern():
         self.max_pattern_len = max([len(pi["indices"]) for pi in self.pattern_info])
         self._get_array()
 
+    @property
+    def is_normalizable(self):
+        return self.normalize_guide != "none"
+
     def plot(self):
-        plt.figure()
+        plt.figure(figsize=(6,6))
         if not hasattr(self,"_graph"):
             self._gen_graph()
         nx.draw_networkx_nodes(self._graph,\
@@ -27,10 +31,25 @@ class BasePattern():
         nx.draw_networkx_edge_labels(self._graph,\
             pos=self._graph_layout,
             edge_labels=self._edge_labels)
+        min_index = min([min(pat["indices"][0]) for pat in self.pattern_info])
+        plt.xlim([min_index - 0.5,0.5])
+        plt.ylim([min_index - 0.5,0.5])
         plt.title(self.label + str(" pattern"))
         plt.xlabel("query index")
         plt.ylabel("reference index")
         plt.show()
+
+    def normalize_cumsum_matrix(self,D):
+        if not self.is_normalizable:
+            return None
+        if self.normalize_guide == "N+M":
+            return D/sum(D.shape)
+        elif self.normalize_guide == "N":
+            return D/D.shape[0]
+        elif self.normalize_guide == "M":
+            return D/D.shape[1]
+        else:
+            raise Exception()
 
     def _gen_graph(self):
         graph = nx.DiGraph()
@@ -75,22 +94,6 @@ class BasePattern():
                     array[pidx,sidx,2] = self.pattern_info[pidx]["weights"][sidx-1]
         self.array = array
 
-    def normalize_cumsum_matrix(self,D):
-        if not self.is_normalizable:
-            return None
-        if self.normalize_guide == "N+M":
-            return D/sum(D.shape)
-        elif self.normalize_guide == "N":
-            return D/D.shape[0]
-        elif self.normalize_guide == "M":
-            return D/D.shape[1]
-        else:
-            raise Exception()
-
-    @property
-    def is_normalizable(self):
-        return self.normalize_guide != "none"
-
 class Symmetric1(BasePattern):
     label = "symmetric1"
     pattern_info = [
@@ -133,6 +136,38 @@ class Symmetric2(BasePattern):
     def __init__(self):
         super().__init__()
 
+class SymmetricP0(Symmetric2):
+    """same as symmetric2 pattern"""
+    label = "symmetricP05"
+
+class SymmetricP05(BasePattern):
+    label = "symmetricP05"
+    pattern_info = [
+        dict(
+            indices=[(-1,-3),(0,-2),(0,-1),(0,0)],
+            weights=[2,1,1]
+        ),
+        dict(
+            indices=[(-1,-2),(0,-1),(0,0)],
+            weights=[2,1]
+        ),
+        dict(
+            indices=[(-1,-1),(0,0)],
+            weights=[2]
+        ),
+        dict(
+            indices=[(-2,-1),(-1,0),(0,0)],
+            weights=[2,1]
+        ),
+        dict(
+            indices=[(-3,-1),(-2,0),(-1,0),(0,0)],
+            weights=[2,1,1]
+        )
+    ]
+    normalize_guide = "N+M"
+
+    def __init__(self):
+        super().__init__()
 
 class SymmetricP1(BasePattern):
     label = "symmetricP1"
@@ -172,6 +207,120 @@ class SymmetricP2(BasePattern):
         )
     ]
     normalize_guide = "N+M"
+
+    def __init__(self):
+        super().__init__()
+
+
+class Asymmetric(BasePattern):
+    label = "asymmetric"
+    pattern_info = [
+        dict(
+            indices=[(-1,0),(0,0)],
+            weights=[1]
+        ),
+        dict(
+            indices=[(-1,-1),(0,0)],
+            weights=[1]
+        ),
+        dict(
+            indices=[(-1,-2),(0,0)],
+            weights=[1]
+        )
+    ]
+    normalize_guide = "N"
+
+    def __init__(self):
+        super().__init__()
+
+class AsymmetricP0(BasePattern):
+    label = "asymmetricP0"
+    pattern_info = [
+        dict(
+            indices=[(0,-1),(0,0)],
+            weights=[0]
+        ),
+        dict(
+            indices=[(-1,-1),(0,0)],
+            weights=[1]
+        ),
+        dict(
+            indices=[(-1,0),(0,0)],
+            weights=[1]
+        )
+    ]
+    normalize_guide = "N"
+
+    def __init__(self):
+        super().__init__()
+
+class AsymmetricP05(BasePattern):
+    label = "asymmetricP05"
+    pattern_info = [
+        dict(
+            indices=[(-1,-3),(0,-2),(0,-1),(0,0)],
+            weights=[0.33,0.33,0.33]
+        ),
+        dict(
+            indices=[(-1,-2),(0,-1),(0,0)],
+            weights=[0.5,0.5]
+        ),
+        dict(
+            indices=[(-1,-1),(0,0)],
+            weights=[1]
+        ),
+        dict(
+            indices=[(-2,-1),(-1,0),(0,0)],
+            weights=[1,1]
+        ),
+        dict(
+            indices=[(-3,-1),(-2,0),(-1,0),(0,0)],
+            weights=[1,1,1]
+        )
+    ]
+    normalize_guide = "N"
+
+    def __init__(self):
+        super().__init__()
+
+class AsymmetricP1(BasePattern):
+    label = "asymmetricP1"
+    pattern_info = [
+        dict(
+            indices=[(-1,-2),(0,-1),(0,0)],
+            weights=[0.5,0.5]
+        ),
+        dict(
+            indices=[(-1,-1),(0,0)],
+            weights=[1]
+        ),
+        dict(
+            indices=[(-2,-1),(-1,0),(0,0)],
+            weights=[1,1]
+        )
+    ]
+    normalize_guide = "N"
+
+    def __init__(self):
+        super().__init__()
+
+class AsymmetricP2(BasePattern):
+    label = "asymmetricP2"
+    pattern_info = [
+        dict(
+            indices=[(-2,-3),(-1,-2),(0,-1),(0,0)],
+            weights=[0.67,0.67,0.67]
+        ),
+        dict(
+            indices=[(-1,-1),(0,0)],
+            weights=[1]
+        ),
+        dict(
+            indices=[(-3,-2),(-2,-1),(-1,0),(0,0)],
+            weights=[1,1,1]
+        )
+    ]
+    normalize_guide = "N"
 
     def __init__(self):
         super().__init__()
