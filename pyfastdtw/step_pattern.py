@@ -3,8 +3,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 import networkx as nx
 
-_MAX = np.iinfo(int).max
-
 class BasePattern():
     """
     step pettern base class
@@ -83,13 +81,13 @@ class BasePattern():
         """
         get pattern information as np.ndarray for numba.jit
         """
-        array = np.zeros([self.num_pattern,self.max_pattern_len,3],dtype="int")
+        array = np.zeros([self.num_pattern,self.max_pattern_len,3],dtype="float")
         for pidx in range(self.num_pattern):
             pattern_len = len(self.pattern_info[pidx]["indices"])
             for sidx in range(pattern_len):
                 array[pidx,sidx,0:2] = self.pattern_info[pidx]["indices"][sidx]
                 if sidx == 0:
-                    array[pidx,sidx,2] = _MAX
+                    array[pidx,sidx,2] = np.nan
                 else:
                     array[pidx,sidx,2] = self.pattern_info[pidx]["weights"][sidx-1]
         self.array = array
@@ -259,7 +257,7 @@ class AsymmetricP05(BasePattern):
     pattern_info = [
         dict(
             indices=[(-1,-3),(0,-2),(0,-1),(0,0)],
-            weights=[0.33,0.33,0.33]
+            weights=[1/3,1/3,1/3]
         ),
         dict(
             indices=[(-1,-2),(0,-1),(0,0)],
@@ -309,7 +307,7 @@ class AsymmetricP2(BasePattern):
     pattern_info = [
         dict(
             indices=[(-2,-3),(-1,-2),(0,-1),(0,0)],
-            weights=[0.67,0.67,0.67]
+            weights=[2/3,2/3,2/3]
         ),
         dict(
             indices=[(-1,-1),(0,0)],

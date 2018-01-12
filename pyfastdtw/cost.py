@@ -3,7 +3,6 @@
 import numpy as np
 from numba import jit
 
-# @jit('f8[:,:](f8[:,:],u8[:,:],u2[:,:,:])',nopython=True)
 @jit(nopython=True)
 def _calc_cumsum_matrix_jit(X,w_list,p_ar):
     """
@@ -35,8 +34,8 @@ def _calc_cumsum_matrix_jit(X,w_list,p_ar):
             for sidx in range(1,max_pattern_len):
                 # calculate step cost of pair-wise cost matrix
                 pattern_index = p_ar[pidx,sidx,0:2]
-                ii = i + pattern_index[0]
-                jj = j + pattern_index[1]
+                ii = int(i + pattern_index[0])
+                jj = int(j + pattern_index[1])
                 if ii < 0 or jj < 0:
                     step_cost[sidx] = np.inf
                     continue
@@ -45,8 +44,8 @@ def _calc_cumsum_matrix_jit(X,w_list,p_ar):
                         * p_ar[pidx,sidx,2]
 
             pattern_index = p_ar[pidx,0,0:2]
-            ii = i + pattern_index[0]
-            jj = j + pattern_index[1]
+            ii = int(i + pattern_index[0])
+            jj = int(j + pattern_index[1])
             if ii < 0 or jj < 0:
                 pattern_cost[pidx] = np.inf
                 continue
@@ -55,6 +54,9 @@ def _calc_cumsum_matrix_jit(X,w_list,p_ar):
                 + step_cost.sum()
 
         D[i,j] = pattern_cost.min()
+    # check whether path can reach at end point with given constraint
+    if D[-1,-1] == np.inf:
+        raise ValueError("no path found")
     return D
 
 
@@ -86,8 +88,8 @@ def _calc_cumsum_matrix_py(X,window,pattern):
             for sidx in range(1,pattern.max_pattern_len):
                 # calculate step cost of pair-wise cost matrix
                 pattern_index = p_ar[pidx,sidx,0:2]
-                ii = i + pattern_index[0]
-                jj = j + pattern_index[1]
+                ii = int(i + pattern_index[0])
+                jj = int(j + pattern_index[1])
                 if ii < 0 or jj < 0:
                     step_cost[sidx] = np.inf
                     continue
@@ -96,8 +98,8 @@ def _calc_cumsum_matrix_py(X,window,pattern):
                         * p_ar[pidx,sidx,2]
 
             pattern_index = p_ar[pidx,0,0:2]
-            ii = i + pattern_index[0]
-            jj = j + pattern_index[1]
+            ii = int(i + pattern_index[0])
+            jj = int(j + pattern_index[1])
             if ii < 0 or jj < 0:
                 pattern_cost[pidx] = np.inf
                 continue
@@ -106,4 +108,7 @@ def _calc_cumsum_matrix_py(X,window,pattern):
                 + step_cost.sum()
 
         D[i,j] = pattern_cost.min()
+    # check whether path can reach at end point with given constraint
+    if D[-1,-1] == np.inf:
+        raise ValueError("no path found")
     return D

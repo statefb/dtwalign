@@ -9,11 +9,16 @@ class BaseWindow():
         pass
 
     def plot(self):
-        plt.figure()
-        sns.heatmap(self.matrix,vmin=0,vmax=1)
-        plt.title(self.label)
-        plt.xlabel("query index")
-        plt.ylabel("reference index")
+        _,ax = plt.subplots(1)
+        sns.heatmap(self.matrix.T,vmin=0,vmax=1,\
+            xticklabels=self.matrix.shape[0]//10,\
+            yticklabels=self.matrix.shape[1]//10,\
+            ax=ax
+        )
+        ax.invert_yaxis()
+        ax.set_title(self.label)
+        ax.set_xlabel("query index")
+        ax.set_ylabel("reference index")
         plt.show()
 
 
@@ -36,3 +41,15 @@ class SakoechibaWindow(BaseWindow):
         yy = np.arange(len_y)
         self.matrix = np.abs(xx[:,np.newaxis] - yy[np.newaxis,:]) < size
         self.list = np.argwhere(self.matrix == True)
+
+class ItakuraWindow(BaseWindow):
+    # TODO
+    label = "Itakura window"
+    def __init__(self):
+        raise NotImplementedError()
+
+class UserWindow(BaseWindow):
+    # TODO
+    label = "user difined window"
+    def __init__(self):
+        raise NotImplementedError()

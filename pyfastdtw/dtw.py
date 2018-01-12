@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
 
 from .cost import _calc_cumsum_matrix_py,_calc_cumsum_matrix_jit
+from .backtrack import _backtrack_py
 from .step_pattern import *
 from .window import *
 from .result import DtwResult
 
 def dtw(x,y,dist,window_type,window_size,step_pattern="symmetric2",\
     dist_only=True,fast=True,open_begin=False,open_end=False):
-    """
-    high-level dtw interface
+    """high-level dtw interface
     TODO:
     ・x,y,distの代わりにXを受け取るようにできる
     ・window関数，マトリクスを受け取るようにできる
@@ -22,28 +22,42 @@ def dtw(x,y,dist,window_type,window_size,step_pattern="symmetric2",\
     # pattern = get_pattern(step_pattern)
     return dtw_low(X,window,pattern,dist_only,fast,open_begin,open_end)
 
-def dtw_low(X,window,pattern,dist_only=True,fast=True,\
+def dtw_low(X,window,pattern,dist_only=False,fast=True,\
     open_begin=False,open_end=False):
+    """low-level dtw interface
+
+    Parameters
+    ----------
+    X : pair-wise cost matrix
+    window : windowing function
+    pattern : step pattern
+    dist_only : if true, only alignment cost will be calculated
+    fast : if true, use fast-dtw
+    open_begin :
+    open_end :
+
+    Returns
+    -------
+    result : DtwResult
+
+    Notes
+    -----
+
     """
-    low-level dtw interface
-    input:
-        X: pair-wise cost matrix
-        window: windowing function
-        pattern: step pattern
-        dist_only: if true, only alignment cost will be calculated
-        fast: if true, use fast-dtw
-        open_begin:
-        open_end:
-    """
+    # validation
+    if X[X < 0].sum() != 0:
+        raise ValueError("pair-wise cost matrix must NOT have negative value")
+
     # naive implementation
-    D = _calc_cumsum_matrix_py(X,window,pattern)
+    # D = _calc_cumsum_matrix_py(X,window,pattern)
     # fast implementation
-    # D = _calc_cumsum_matrix_jit(X,window.array,pattern.array,fast)
+    D = _calc_cumsum_matrix_jit(X,window.list,pattern.array)
 
     if dist_only:
         path = None
     else:
-        path = _backtrack(D)
+        # naive
+        path = _backtrack_py(D,pattern)
 
     result = DtwResult(D,path,window,pattern)
 
