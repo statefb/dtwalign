@@ -3,6 +3,14 @@ import numpy as np
 import matplotlib.pyplot as plt
 import networkx as nx
 
+def _num_to_str(num):
+    if type(num) == int:
+        return str(num)
+    elif type(num) == float:
+        return "{0:1.2f}".format(num)
+    else:
+        return str(num)
+
 class BasePattern():
     """
     step pettern base class
@@ -72,7 +80,7 @@ class BasePattern():
                 graph.add_edge(node_names[pidx][sidx],
                     node_names[pidx][sidx+1])
                 edge_labels[(node_names[pidx][sidx],
-                    node_names[pidx][sidx+1])] = pat["weights"][sidx]
+                    node_names[pidx][sidx+1])] = _num_to_str(pat["weights"][sidx])
         self._graph = graph
         self._graph_layout = graph_layout
         self._edge_labels = edge_labels
@@ -91,6 +99,22 @@ class BasePattern():
                 else:
                     array[pidx,sidx,2] = self.pattern_info[pidx]["weights"][sidx-1]
         self.array = array
+
+    def __repr__(self):
+        p_info = self.pattern_info
+        rv = self.label + " pattern: \n\n"
+        for pidx in range(self.num_pattern):
+            rv += "pattern " + str(pidx) + ": "
+            pattern_len = len(p_info[pidx]["indices"])
+            p_str = str(p_info[pidx]["indices"][0])
+            for sidx in range(1,pattern_len):
+                p_str += " - ["
+                p_str += _num_to_str(p_info[pidx]["weights"][sidx-1])
+                p_str += "] - "
+                p_str += str(p_info[pidx]["indices"][sidx])
+            rv += p_str + "\n"
+        rv += "\nnormalization guide: " + self.normalize_guide
+        return rv
 
 class Symmetric1(BasePattern):
     label = "symmetric1"
