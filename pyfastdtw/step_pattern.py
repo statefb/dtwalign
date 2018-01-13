@@ -45,15 +45,26 @@ class BasePattern():
         plt.ylabel("reference index")
         plt.show()
 
-    def normalize_cumsum_matrix(self,D):
+    def _normalize(self,row,n,m):
+        """normalize
+
+        Parameters
+        ----------
+        row : 1D array
+            expect last row of D
+        n : int
+            length of query (D.shape[0])
+        m : int
+            length of reference (D.shape[1])
+        """
         if not self.is_normalizable:
             return None
         if self.normalize_guide == "N+M":
-            return D/sum(D.shape)
+            return row/(n + np.arange(1,m+1))
         elif self.normalize_guide == "N":
-            return D/D.shape[0]
+            return row/n
         elif self.normalize_guide == "M":
-            return D/D.shape[1]
+            return row/np.arange(1,m+1)
         else:
             raise Exception()
 

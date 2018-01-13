@@ -4,7 +4,7 @@ import numpy as np
 from numba import jit
 
 @jit(nopython=True)
-def _backtrack_jit(D,p_ar):
+def _backtrack_jit(D,p_ar,last_idx=-1):
         """fast implementation by numba.jit
 
         Parameters
@@ -27,7 +27,10 @@ def _backtrack_jit(D,p_ar):
         # initialize index
         i,j = D.shape
         i -= 1
-        j -= 1
+        if last_idx == -1:
+            j -= 1
+        else:
+            j = last_idx
         # alignment path
         path = np.array(((i,j),),dtype=np.int64)
         # cache to memorize D

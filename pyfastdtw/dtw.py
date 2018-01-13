@@ -5,6 +5,7 @@ from .backtrack import _backtrack_py,_backtrack_jit
 from .step_pattern import *
 from .window import *
 from .result import DtwResult
+from .distance import _get_alignment_distance
 
 def dtw(x,y,dist,window_type,window_size,step_pattern="symmetric2",\
     dist_only=True,fast=True,open_begin=False,open_end=False):
@@ -61,13 +62,14 @@ def dtw_low(X,window,pattern,dist_only=False,approx=True,\
             raise ValueError("open-begin alignment requires step pattern \
                 that has 'N' normalization. see original paper for detail.")
     if open_end:
-        if not pattern.is_normalizable():
+        if not pattern.is_normalizable:
             raise ValueError("open-end alignment requires normalizable step pattern")
 
     # naive implementation
     # D = _calc_cumsum_matrix_py(X,window,pattern)
     # fast implementation
     D = _calc_cumsum_matrix_jit(X,window.list,pattern.array)
+    dist,normalized_dist,last_idx = _get_alignment_distance(D,pattern,open_end)
 
     if dist_only:
         path = None
@@ -75,9 +77,12 @@ def dtw_low(X,window,pattern,dist_only=False,approx=True,\
         # naive
         # path = _backtrack_py(D,pattern)
         # approx
-        path = _backtrack_jit(D,pattern.array)
+        path = _backtrack_jit(D,pattern.array,last_idx)
 
     result = DtwResult(D,path,window,pattern)
+    # set some properties
+    result.distance = dist
+    result.normalized_distance = normalized_dist
 
     return result
 

@@ -7,22 +7,15 @@ from scipy.interpolate import interp1d
 class DtwResult():
     def __init__(self,cumsum_matrix,path,window,pattern):
         self.cumsum_matrix = cumsum_matrix
+
         if path is None:
             self.dist_only = True
         else:
             self.dist_only = False
             self.path = path
+
         self._window = window
         self._pattern = pattern
-        # alignment distance
-        self.distance = cumsum_matrix[-1,-1]
-
-        if self._pattern.is_normalizable:
-            # normalized cumsum matrix
-            self._normalized_cumsum_matrix = \
-                self._pattern.normalize_cumsum_matrix(cumsum_matrix)
-            # normalized distance
-            self.normalized_distance = self._normalized_cumsum_matrix[-1,-1]
 
     def get_warping_path(self,target="query"):
         """get warping path

@@ -54,9 +54,7 @@ def _calc_cumsum_matrix_jit(X,w_list,p_ar):
                 + step_cost.sum()
 
         D[i,j] = pattern_cost.min()
-    # check whether path can reach at end point with given constraint
-    if D[-1,-1] == np.inf:
-        raise ValueError("no path found")
+
     return D
 
 
@@ -108,7 +106,4 @@ def _calc_cumsum_matrix_py(X,window,pattern):
                 + step_cost.sum()
 
         D[i,j] = pattern_cost.min()
-    # check whether path can reach at end point with given constraint
-    if D[-1,-1] == np.inf:
-        raise ValueError("no path found")
     return D
