@@ -1,7 +1,7 @@
 # fast-dtw for Python test
 
 TODO:
-* warp function (output warp index)
+* warp function Rとの整合性確認(refとquery)
 * openend,openbigin
 * fastdtw
 

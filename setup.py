@@ -22,7 +22,8 @@ def main():
             "matplotlib",
             "seaborn >= 0.8.1",
             "networkx",
-            "numba >= 0.34.0"
+            "numba >= 0.34.0",
+            "scipy"
         ],
         dependency_links = [
 

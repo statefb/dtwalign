@@ -2,6 +2,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
+from scipy.interpolate import interp1d
 
 class DtwResult():
     def __init__(self,cumsum_matrix,path,window,pattern):
@@ -22,6 +23,32 @@ class DtwResult():
                 self._pattern.normalize_cumsum_matrix(cumsum_matrix)
             # normalized distance
             self.normalized_distance = self._normalized_cumsum_matrix[-1,-1]
+
+    def get_warping_path(self,target="query"):
+        """get warping path
+
+        Parameters
+        ----------
+        target : "query" or "reference"
+            specify the target to be warped
+
+        Returns
+        -------
+        warping_index : 1D array
+            warping index
+
+        """
+        if target not in ("query","reference"):
+            raise ValueError("target argument must be 'query' or 'reference'")
+        if target == "reference":
+            xp = self.path[:,0]  # query path
+            yp = self.path[:,1]  # reference path
+        else:
+            yp = self.path[:,0]  # query path
+            xp = self.path[:,1]  # reference path
+        interp_func = interp1d(xp,yp,kind="linear")
+        warping_index = interp_func(np.arange(0,xp.max()+1)).astype(np.int64)
+        return warping_index
 
     def plot_window(self):
         self._window.plot()

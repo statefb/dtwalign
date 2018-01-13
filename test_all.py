@@ -13,6 +13,7 @@ y1 += np.random.rand(y1.size)
 plt.figure()
 plt.plot(x1)
 plt.plot(y1)
+plt.show()
 
 # x:reference, y:query
 X = np.abs(x1[:,np.newaxis] - y1[np.newaxis,:])
@@ -20,17 +21,17 @@ X = np.abs(x1[:,np.newaxis] - y1[np.newaxis,:])
 window = NoWindow(X.shape[0],X.shape[1])
 
 patterns = [
-    Symmetric1(),
-    Symmetric2(),
-    SymmetricP1(),
-    SymmetricP2(),
-    SymmetricP05(),
-    SymmetricP0(),
-    Asymmetric(),
-    AsymmetricP1(),
+    # Symmetric1(),
+    # Symmetric2(),
+    # SymmetricP1(),
+    # SymmetricP2(),
+    # SymmetricP05(),
+    # SymmetricP0(),
+    # Asymmetric(),
+    # AsymmetricP1(),
     AsymmetricP2(),
-    AsymmetricP0(),
-    AsymmetricP05()
+    # AsymmetricP0(),
+    # AsymmetricP05()
 ]
 
 for pattern in patterns:
