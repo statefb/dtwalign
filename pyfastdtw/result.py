@@ -48,7 +48,7 @@ class DtwResult():
         Parameters
         ----------
         with_ : "win","cum" or None
-            if given, following will be plot with alignment path
+            if given, following will be plotted with alignment path
             "win" : window matrix
             "cum" : cumsum matrix
 
