@@ -4,13 +4,20 @@ import numpy as np
 from numba import jit
 
 @jit(nopython=True)
-def _calc_cumsum_matrix_jit(X,w_list,p_ar):
+def _calc_cumsum_matrix_jit(X,w_list,p_ar,open_begin):
     """
     fast implementation by numba.jit
     """
+
     len_x,len_y = X.shape
     # cumsum matrix
     D = np.ones((len_x,len_y),dtype=np.float64) * np.inf
+
+    if open_begin:
+        X = np.vstack((np.zeros((1,X.shape[1])),X))
+        D = np.vstack((np.zeros((1,D.shape[1])),D))
+        w_list[:,0] += 1
+
     # number of patterns
     num_pattern = p_ar.shape[0]
     # max pattern length
@@ -53,7 +60,9 @@ def _calc_cumsum_matrix_jit(X,w_list,p_ar):
             pattern_cost[pidx] = D[ii,jj] \
                 + step_cost.sum()
 
-        D[i,j] = pattern_cost.min()
+        min_cost = pattern_cost.min()
+        if min_cost != np.inf:
+            D[i,j] = min_cost
 
     return D
 

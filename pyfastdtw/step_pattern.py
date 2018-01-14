@@ -48,8 +48,6 @@ class BasePattern():
     def _normalize(self,row,n,m):
         """normalize
 
-        Parameters
-        ----------
         row : 1D array
             expect last row of D
         n : int

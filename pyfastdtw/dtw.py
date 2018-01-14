@@ -52,7 +52,7 @@ def dtw_low(X,window,pattern,dist_only=False,approx=True,\
     """
     # validation
     if X[X < 0].sum() != 0:
-        raise ValueError("pair-wise cost matrix must NOT have negative value")
+        raise ValueError("pair-wise cost matrix must NOT contain negative values")
     if not isinstance(window,BaseWindow):
         raise ValueError("window argument must be Window object")
     if not isinstance(pattern,BasePattern):
@@ -65,19 +65,18 @@ def dtw_low(X,window,pattern,dist_only=False,approx=True,\
         if not pattern.is_normalizable:
             raise ValueError("open-end alignment requires normalizable step pattern")
 
-    # naive implementation
-    # D = _calc_cumsum_matrix_py(X,window,pattern)
-    # fast implementation
-    D = _calc_cumsum_matrix_jit(X,window.list,pattern.array)
+    D = _calc_cumsum_matrix_jit(X,window.list,pattern.array,open_begin)
     dist,normalized_dist,last_idx = _get_alignment_distance(D,pattern,open_end)
 
     if dist_only:
         path = None
     else:
-        # naive
-        # path = _backtrack_py(D,pattern)
-        # approx
         path = _backtrack_jit(D,pattern.array,last_idx)
+
+    if open_begin:
+        D = D[1:,:]
+        path = path[1:,:]
+        path[:,0] -= 1
 
     result = DtwResult(D,path,window,pattern)
     # set some properties

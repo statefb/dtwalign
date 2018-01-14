@@ -36,16 +36,22 @@ def _backtrack_jit(D,p_ar,last_idx=-1):
         # cache to memorize D
         D_cache = np.ones(num_pattern,dtype=np.float64) * np.inf
 
-        while not (i == 0 and j == 0):
+        while True:
+            if i== 0 and j == 0:
+                break
             for pidx in range(num_pattern):
                 # get D value corresponds to end of pattern node
                 pattern_index = p_ar[pidx,0,0:2]
                 ii = int(i + pattern_index[0])
                 jj = int(j + pattern_index[1])
-                if ii < 0 and jj < 0:
+                if ii < 0 or jj < 0:
                     D_cache[pidx] = np.inf
                 else:
                     D_cache[pidx] = D[ii,jj]
+
+            if (D_cache == np.inf).all():
+                # break if there is no direction can be taken
+                break
 
             # find path minimize D_chache
             min_pattern_idx = np.argmin(D_cache)
@@ -56,8 +62,6 @@ def _backtrack_jit(D,p_ar,last_idx=-1):
 
             i += p_ar[min_pattern_idx,0,0]
             j += p_ar[min_pattern_idx,0,1]
-            if i < 0: i = 0
-            if j < 0: j = 0
 
         return path[::-1]
 

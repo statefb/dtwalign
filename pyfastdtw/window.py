@@ -44,12 +44,12 @@ class SakoechibaWindow(BaseWindow):
 
 class ItakuraWindow(BaseWindow):
     # TODO
-    label = "Itakura window"
+    label = "itakura window"
     def __init__(self):
         raise NotImplementedError()
 
 class UserWindow(BaseWindow):
     # TODO
-    label = "user difined window"
+    label = "user defined window"
     def __init__(self):
         raise NotImplementedError()

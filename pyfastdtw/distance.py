@@ -5,10 +5,11 @@ def _get_alignment_distance(D,pattern,open_end):
     dist = D[-1,-1]
     normalized_dist = None
     last_idx = -1
-    
+
     if pattern.is_normalizable:
         # get the last row of D
         last_row = D[-1,:]
+        # normalize all value of last row
         normalized_last_row = pattern._normalize(\
             last_row,D.shape[0],D.shape[1])
         if open_end:

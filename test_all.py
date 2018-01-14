@@ -4,10 +4,15 @@ from pyfastdtw.step_pattern import *
 from pyfastdtw.window import *
 from test_data import gen_data
 
-open_begin = False
+#data_set
+open_begin_d = True
+open_end_d = False
+
+# dtw param
+open_begin = True
 open_end = True
 
-x1,y1,X = gen_data(open_bigen=open_begin,open_end=open_end)
+x1,y1,X = gen_data(open_begin=open_begin_d,open_end=open_end_d)
 
 # window = SakoechibaWindow(X.shape[0],X.shape[1],size=50)
 window = NoWindow(X.shape[0],X.shape[1])
@@ -19,13 +24,13 @@ plt.show()
 
 patterns = [
     # Symmetric1(),
-    Symmetric2(),
+    # Symmetric2(),
     # SymmetricP1(),
-    SymmetricP2(),
+    # SymmetricP2(),
     # SymmetricP05(),
     # SymmetricP0(),
     # Asymmetric(),
-    # AsymmetricP1(),
+    AsymmetricP1(),
     # AsymmetricP2(),
     # AsymmetricP0(),
     # AsymmetricP05()
