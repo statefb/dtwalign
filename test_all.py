@@ -10,7 +10,7 @@ open_end_d = False
 
 # dtw param
 open_begin = True
-open_end = True
+open_end = False
 
 x1,y1,X = gen_data(open_begin=open_begin_d,open_end=open_end_d)
 
@@ -29,8 +29,8 @@ patterns = [
     # SymmetricP2(),
     # SymmetricP05(),
     # SymmetricP0(),
-    # Asymmetric(),
-    AsymmetricP1(),
+    Asymmetric(),
+    # AsymmetricP1(),
     # AsymmetricP2(),
     # AsymmetricP0(),
     # AsymmetricP05()

@@ -84,7 +84,7 @@ class DtwResult():
                 yticklabels=self._window.matrix.shape[1]//10,\
                 ax=ax
             )
-            ax.plot(self.path[:,0],self.path[:,1])
+            ax.plot(self.path[:,0],self.path[:,1],"b")
             ax.invert_yaxis()
         elif with_ == "cum":
             # extract max value with ignoring inf
@@ -95,7 +95,7 @@ class DtwResult():
                 yticklabels=self.cumsum_matrix.shape[1]//10,\
                 ax=ax
             )
-            ax.plot(self.path[:,0],self.path[:,1])
+            ax.plot(self.path[:,0],self.path[:,1],"y")
             ax.invert_yaxis()
         else:
             raise NotImplementedError("'with_' argument only supports: 'win','cum'")
