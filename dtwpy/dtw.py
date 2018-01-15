@@ -9,7 +9,7 @@ from .result import DtwResult
 from .distance import _get_alignment_distance
 
 def dtw(x,y,dist="euclidean",window_type="none",window_size=None,step_pattern="symmetric2",\
-    dist_only=False,open_begin=False,open_end=False,approx=True):
+    dist_only=False,open_begin=False,open_end=False,approx=False):
     """high-level dtw interface
 
     Parameters
@@ -40,23 +40,37 @@ def dtw(x,y,dist="euclidean",window_type="none",window_size=None,step_pattern="s
     if x.ndim == 1: x = x[:,np.newaxis]
     if y.ndim == 1: y = y[:,np.newaxis]
 
-    window = _get_window(window_type,window_size,len_x,len_y)
-    pattern = _get_pattern(step_pattern)
-
     # get pair-wise cost matrix
     if type(dist) == str:
         X = cdist(x,y,metric=dist)
     else:
-        # TODO: for efficiency, only window cell must be calculated
+        # TODO: for efficiency, only window cell should be calculated
         X = np.zeros([len_x,len_y])
         for xidx in range(len_x):
             for yidx in range(len_y):
                 X[xidx,yidx] = dist(x[xidx,:],y[yidx,:])
 
+    return dtw_from_distance_matrix(X,window_type,window_size,step_pattern,dist_only,\
+        open_begin,open_end,approx)
+
+def dtw_from_distance_matrix(X,window_type="none",window_size=None,step_pattern="symmetric2",\
+    dist_only=False,open_begin=False,open_end=False,approx=False):
+    """run dtw from distance matrix
+
+    Parameters
+    ----------
+    X : 2D array
+        pre-computed pair-wise distance matrix
+    others : see dtw function
+    
+    """
+    len_x,len_y = X.shape
+    window = _get_window(window_type,window_size,len_x,len_y)
+    pattern = _get_pattern(step_pattern)
     return dtw_low(X,window,pattern,dist_only,open_begin,open_end,approx)
 
 def dtw_low(X,window,pattern,dist_only=False,\
-    open_begin=False,open_end=False,approx=True):
+    open_begin=False,open_end=False,approx=False):
     """low-level dtw interface
 
     Parameters
