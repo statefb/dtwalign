@@ -14,15 +14,15 @@ def dtw(x,y,dist="euclidean",window_type="none",window_size=None,step_pattern="s
 
     Parameters
     ----------
-    x : 1D or 2D array
+    x : 1D or 2D array (sample * feature)
         query time series
-    y : 1D or 2D array
+    y : 1D or 2D array (sample * feature)
         reference time series
     dist : string or function
         define how to calclulate pair-wise distance between x and y
         string : metric argument of scipy.spatial.distance
         function : user defined function. argument must be 2D array (sample * feature)
-            ex) user_func(a,b)
+            ex) user_func(a,b) : a and b are 2D array
     window_type : string
     window_size : int
     step_pattern : string
@@ -62,7 +62,7 @@ def dtw_from_distance_matrix(X,window_type="none",window_size=None,step_pattern=
     X : 2D array
         pre-computed pair-wise distance matrix
     others : see dtw function
-    
+
     """
     len_x,len_y = X.shape
     window = _get_window(window_type,window_size,len_x,len_y)
@@ -134,6 +134,8 @@ def dtw_low(X,window,pattern,dist_only=False,\
 def _get_window(window_type,window_size,len_x,len_y):
     if window_type == "sakoechiba":
         return SakoechibaWindow(len_x,len_y,window_size)
+    elif window_type == "itakura":
+        return ItakuraWindow(len_x,len_y)
     elif window_type == "none":
         return NoWindow(len_x,len_y)
     else:

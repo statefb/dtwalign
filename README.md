@@ -1,6 +1,9 @@
 # fast-dtw for Python test repository
 
 TODO:
+* itakura:unittest
+* step_pattern array comment
+* plot_path: plot time series if ndim == 1
 * fastdtw
 
 ## memo

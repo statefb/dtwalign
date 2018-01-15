@@ -32,8 +32,6 @@ class DtwResult():
 
         Notes
         -----
-        scipy internal error will be raised when use open-end
-        (seems start point of interp function not be defined(nan value))
 
         """
         if target not in ("query","reference"):
@@ -71,7 +69,7 @@ class DtwResult():
         ax.set_title("cumsum matrix")
         plt.show()
 
-    def plot_path(self,with_=None):
+    def plot_path(self,with_="cum"):
         """plot alignment path
 
         Parameters
