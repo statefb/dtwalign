@@ -1,19 +1,25 @@
 # -*- coding: utf-8 -*-
 from setuptools import setup
 from setuptools import find_packages
-# from msta_net import __author__,__version__
+
+# meta info
+NAME = "dtwpy"
+VERSION = "0.0.1"
+AUTHOR = "Takehiro Suzuki"
+AUTHOR_EMAIL = ""
+URL = ""
+DESCRIPTION = 'comprehensive dtw package for python'
+
 
 def main():
-    description = 'fast dtw for python'
 
     setup(
-        name='pyfastdtw',
-        # version=__version__,
-        # author=__author__,
-        author_email='',
-        url='',
-        description=description,
-        long_description=description,
+        name=NAME,
+        version=VERSION,
+        author=AUTHOR,
+        author_email=AUTHOR_EMAIL,
+        url=URL,
+        description=DESCRIPTION,
         zip_safe=False,
         include_package_data=True,
         packages=find_packages(),

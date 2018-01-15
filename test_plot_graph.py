@@ -1,4 +1,4 @@
-from pyfastdtw.step_pattern import *
+from dtwpy.step_pattern import *
 
 
 Asymmetric().plot()

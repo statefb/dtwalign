@@ -1,12 +1,11 @@
-# fast-dtw for Python test
+# fast-dtw for Python test repository
 
 TODO:
 * fastdtw
 
 ## memo
 ### dependencyに関すること
-* seaborn > 0.8.1?  
-それ以下だとヒートマップにパスを重ね合わせた時に反転してしまう？
+* seaborn > 0.8.1
 * numba 0.22.1はNG?  
 0.36.2では動いた on Windows
 0.34.0で確認 on mac OSX

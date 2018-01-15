@@ -1,10 +1,10 @@
 import numpy as np
 from numpy.testing import assert_almost_equal
-from pyfastdtw import dtw,dtw_low
-from pyfastdtw.step_pattern import *
-from pyfastdtw.window import *
-from pyfastdtw.cost import _calc_cumsum_matrix_jit
-from pyfastdtw.backtrack import _backtrack_py,_backtrack_jit
+from dtwpy import dtw,dtw_low
+from dtwpy.step_pattern import *
+from dtwpy.window import *
+from dtwpy.cost import _calc_cumsum_matrix_jit
+from dtwpy.backtrack import _backtrack_py,_backtrack_jit
 
 np.random.seed(1234)
 

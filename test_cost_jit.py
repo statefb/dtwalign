@@ -1,9 +1,9 @@
 import numpy as np
 from numpy.testing import assert_almost_equal
-from pyfastdtw.cost import _calc_cumsum_matrix_py
-from pyfastdtw.cost import _calc_cumsum_matrix_jit
-from pyfastdtw.window import *
-from pyfastdtw.step_pattern import *
+from dtwpy.cost import _calc_cumsum_matrix_py
+from dtwpy.cost import _calc_cumsum_matrix_jit
+from dtwpy.window import *
+from dtwpy.step_pattern import *
 
 x1 = np.sin(2*np.pi*3*np.linspace(0,1,1000))
 x1 += np.random.rand(x1.size)

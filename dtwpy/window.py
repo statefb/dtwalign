@@ -39,7 +39,7 @@ class SakoechibaWindow(BaseWindow):
     def _get_window(self,len_x,len_y,size):
         xx = np.arange(len_x)
         yy = np.arange(len_y)
-        self.matrix = np.abs(xx[:,np.newaxis] - yy[np.newaxis,:]) < size
+        self.matrix = np.abs(xx[:,np.newaxis] - yy[np.newaxis,:]) <= size
         self.list = np.argwhere(self.matrix == True)
 
 class ItakuraWindow(BaseWindow):

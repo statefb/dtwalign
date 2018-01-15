@@ -1,7 +1,7 @@
 import numpy as np
-from pyfastdtw import dtw,dtw_low
-from pyfastdtw.step_pattern import *
-from pyfastdtw.window import *
+from dtwpy import dtw,dtw_low
+from dtwpy.step_pattern import *
+from dtwpy.window import *
 from test_data import gen_data
 
 #data_set

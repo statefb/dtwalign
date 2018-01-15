@@ -1,79 +1,128 @@
 # -*- coding: utf-8 -*-
+"""
+unittest
 
+Notes
+-----
+Result using window differs between R and Python with open-begin because
+R implementation doesn't consider zero-padded row separately.
+
+"""
 import unittest
 from numpy.testing import assert_almost_equal
 
-from pyfastdtw import dtw_low
-from pyfastdtw.step_pattern import *
-from pyfastdtw.window import *
+from dtwpy import dtw
+from dtwpy.step_pattern import *
+from dtwpy.window import *
+from test_data import gen_data
+from rdtw import DtwR
 
-from mtsa.common.dtw import DtwR
+import matplotlib.pyplot as plt
 
 class TestDistance(unittest.TestCase):
     def setUp(self):
-        # generate test data
-        np.random.seed(12)
-        self.X0 = np.ones([100,200])
-        x1 = np.sin(2*np.pi*3*np.linspace(0,1,100))
-        x1 += np.random.rand(x1.size)
-        y1 = np.sin(2*np.pi*3.1*np.linspace(0,1,101))
-        y1 += np.random.rand(y1.size)
-        self.X1 = x1[:,np.newaxis] - y1[np.newaxis,:]
-        # self.X0 = self.X1
-        self.X2 = self.X1
+        self._gen_data()
+        self._gen_pattern()
+        self._gen_window()
 
     def tearDown(self):
         pass
 
-    def test_distance_symmetric2(self):
+    def _gen_data(self):
+        """generate test data
+        ex) open_begin=False,open_end=True
+        self.X[0][1]
+        """
+        self.x = []
+        self.y = []
+        self.X = []
+
+        for open_begin in [False,True]:
+            tx = []
+            ty = []
+            tX = []
+            for open_end in [False,True]:
+                # x:query, y:reference, X:pair-wise cost matrix
+                x,y,X = gen_data(open_begin,open_end)
+                tx.append(x)
+                ty.append(y)
+                tX.append(X)
+
+                # # plot data
+                # plt.figure()
+                # plt.plot(x,label="query");plt.plot(y,label="reference")
+                # plt.legend()
+                # plt.title("open_begin:{},open_end:{}".format(open_begin,open_end))
+                # plt.show()
+
+            self.x.append(tx)
+            self.y.append(ty)
+            self.X.append(tX)
+
+    def _gen_pattern(self):
+        self.patterns = [
+            "symmetric1",
+            "symmetric2",
+            "symmetricP05",
+            "symmetricP0",
+            "symmetricP1",
+            "symmetricP2",
+            "asymmetric",
+            "asymmetricP0",
+            "asymmetricP05",
+            "asymmetricP1",
+            "asymmetricP2"
+        ]
+
+    def _gen_window(self):
+        self.windows = dict(
+            sakoechiba=20,
+            # itakura=[20,50],
+            none=0
+        )
+
+    def _assert_dist(self,pattern,win_name,win_size,open_begin,open_end):
         # R
-        r0 = DtwR(step_pattern="symmetric2")
-        r0.fit(self.X0)
-        r1 = DtwR(step_pattern="symmetric2")
-        r1.fit(self.X1)
-        r2 = DtwR(step_pattern="symmetric2")
-        r2.fit(self.X2)
-        # pyfastdtw
-        sym2 = Symmetric2()
-        w0 = NoWindow(self.X0.shape[0],self.X0.shape[1])
-        py0 = dtw_low(self.X0,w0,pattern=sym2)
-        w1 = NoWindow(self.X1.shape[0],self.X1.shape[1])
-        py1 = dtw_low(self.X1,w1,pattern=sym2)
-        w2 = NoWindow(self.X2.shape[0],self.X2.shape[1])
-        py2 = dtw_low(self.X2,w2,pattern=sym2)
+        rdtw = DtwR(pattern,win_name,win_size,False,open_end,open_begin)
+        rdtw.fit(self.X[int(open_begin)][int(open_end)])
+        # Python
+        pydtw = dtw(
+            self.x[int(open_begin)][int(open_end)],
+            self.y[int(open_begin)][int(open_end)],
+            "euclidean",win_name,win_size,pattern,
+            False,open_begin,open_end,False
+        )
+        if pattern=="symmetric1":
+            pass
         #assert
-        assert_almost_equal(r0.distance,py0.distance)
-        assert_almost_equal(r1.distance,py1.distance)
-        assert_almost_equal(r2.distance,py2.distance)
-        assert_almost_equal(r0.normalized_distance,py0.normalized_distance)
-        assert_almost_equal(r1.normalized_distance,py1.normalized_distance)
-        assert_almost_equal(r2.normalized_distance,py2.normalized_distance)
+        assert_almost_equal(rdtw.distance,pydtw.distance)
+        assert_almost_equal(rdtw.normalized_distance,pydtw.normalized_distance)
 
-    def test_distance_symmetricP2(self):
-        # pyfastdtw
-        symp2 = SymmetricP2()
-        w0 = NoWindow(self.X0.shape[0],self.X0.shape[1])
-        py0 = dtw_low(self.X0,w0,pattern=symp2)
-        w1 = NoWindow(self.X1.shape[0],self.X1.shape[1])
-        py1 = dtw_low(self.X1,w1,pattern=symp2)
-        w2 = NoWindow(self.X2.shape[0],self.X2.shape[1])
-        py2 = dtw_low(self.X2,w2,pattern=symp2)
+    def test_asymmetric_distance(self):
+        """asymmetric distance
+        """
+        asym_patterns = [pattern for pattern in self.patterns if pattern.find("asymmetric") != -1]
+        for pattern in asym_patterns:
+            for win_name,win_size in self.windows.items():
+                for open_begin in [False,True]:
+                    for open_end in [False,True]:
+                        with self.subTest(pattern=pattern,win_name=win_name,\
+                            win_size=win_size,open_begin=open_begin,open_end=open_end):
+                            self._assert_dist(pattern,win_name,win_size,open_begin,open_end)
 
-        # R
-        r0 = DtwR(step_pattern="symmetricP2",distance_only=True)
-        r0.fit(self.X0)
-        r1 = DtwR(step_pattern="symmetricP2",distance_only=True)
-        r1.fit(self.X1)
-        r2 = DtwR(step_pattern="symmetricP2",distance_only=True)
-        r2.fit(self.X2)
+    def test_symmetric_distance(self):
+        """symmetric distance (except for symmetric1 because unnormalizable)
+        """
+        sym_patterns = [pattern for pattern in self.patterns if pattern.find("asymmetric") == -1]
+        sym_patterns.remove("symmetric1")
+        for pattern in sym_patterns:
+            for win_name,win_size in self.windows.items():
+                for open_begin in [False]:  # open-begin requires 'N' normalizable pattern
+                    for open_end in [False,True]:
+                        with self.subTest(pattern=pattern,win_name=win_name,\
+                            win_size=win_size,open_begin=open_begin,open_end=open_end):
+                            self._assert_dist(pattern,win_name,win_size,open_begin,open_end)
 
-        #assert
-        assert_almost_equal(r0.distance,py0.distance)
-        assert_almost_equal(r1.distance,py1.distance)
-        assert_almost_equal(r2.distance,py2.distance)
-        assert_almost_equal(r0.normalized_distance,py0.normalized_distance)
-        assert_almost_equal(r1.normalized_distance,py1.normalized_distance)
-        assert_almost_equal(r2.normalized_distance,py2.normalized_distance)
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)

@@ -30,6 +30,11 @@ class DtwResult():
         warping_index : 1D array
             warping index
 
+        Notes
+        -----
+        scipy internal error will be raised when use open-end
+        (seems start point of interp function not be defined(nan value))
+
         """
         if target not in ("query","reference"):
             raise ValueError("target argument must be 'query' or 'reference'")
@@ -40,7 +45,10 @@ class DtwResult():
             yp = self.path[:,0]  # query path
             xp = self.path[:,1]  # reference path
         interp_func = interp1d(xp,yp,kind="linear")
-        warping_index = interp_func(np.arange(0,xp.max()+1)).astype(np.int64)
+        # get warping index as float values and then convert to int
+        # note: Ideally, the warped value should be calculated as mean.
+        #       (in this implementation, just use value corresponds to rounded-up index)
+        warping_index = interp_func(np.arange(xp.min(),xp.max()+1)).astype(np.int64)
         return warping_index
 
     def plot_window(self):
