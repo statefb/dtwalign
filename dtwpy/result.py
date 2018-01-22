@@ -47,7 +47,7 @@ class DtwResult():
         # note: Ideally, the warped value should be calculated as mean.
         #       (in this implementation, just use value corresponds to rounded-up index)
         warping_index = interp_func(np.arange(xp.min(),xp.max()+1)).astype(np.int64)
-        warping_index[0] = xp.min() # the most left side gives nan, so substitute min value
+        warping_index[0] = yp.min() # the most left side gives nan, so substitute min value
         return warping_index
 
     def plot_window(self):
