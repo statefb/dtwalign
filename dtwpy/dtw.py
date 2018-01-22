@@ -24,6 +24,7 @@ def dtw(x,y,dist="euclidean",window_type="none",window_size=None,step_pattern="s
         function : user defined function. argument must be 2D array (sample * feature)
             ex) user_func(a,b) : a and b are 2D array
     window_type : string
+        define window type
     window_size : int
     step_pattern : string
     dist_only : bool
