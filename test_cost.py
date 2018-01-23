@@ -1,12 +1,5 @@
 # -*- coding: utf-8 -*-
-"""
-unittest
-
-Notes
------
-Result using window differs between R and Python with open-begin because
-R implementation doesn't consider zero-padded row separately.
-
+"""unittest
 """
 import unittest
 from numpy.testing import assert_almost_equal
@@ -77,26 +70,35 @@ class TestDistance(unittest.TestCase):
     def _gen_window(self):
         self.windows = dict(
             sakoechiba=20,
-            # itakura=[20,50],
-            none=0
+            itakura=None,
+            none=None
         )
 
     def _assert_dist(self,pattern,win_name,win_size,open_begin,open_end):
-        # R
-        rdtw = DtwR(pattern,win_name,win_size,False,open_end,open_begin)
-        rdtw.fit(self.X[int(open_begin)][int(open_end)])
-        # Python
-        pydtw = dtw(
-            self.x[int(open_begin)][int(open_end)],
-            self.y[int(open_begin)][int(open_end)],
-            "euclidean",win_name,win_size,pattern,
-            False,open_begin,open_end,False
-        )
-        if pattern=="symmetric1":
+        if open_begin and win_name != "none":
+            """
+            Results using window with open-begin differ between R and Python because
+            R implementation doesn't consider zero-padded row separately.
+            """
             pass
-        #assert
-        assert_almost_equal(rdtw.distance,pydtw.distance)
-        assert_almost_equal(rdtw.normalized_distance,pydtw.normalized_distance)
+        elif (open_begin or open_end) and win_name == "itakura":
+            pass
+        else:
+            # get R result
+            rdtw = DtwR(pattern,win_name,win_size,False,open_end,open_begin)
+            rdtw.fit(self.X[int(open_begin)][int(open_end)])
+            # get Python result
+            pydtw = dtw(
+                self.x[int(open_begin)][int(open_end)],
+                self.y[int(open_begin)][int(open_end)],
+                "euclidean",win_name,win_size,pattern,
+                False,open_begin,open_end,False
+            )
+            # assert
+            assert_almost_equal(rdtw.distance,pydtw.distance)
+            if pattern != "symmetric1":
+                # symmetric1 pattern is not normalizable
+                assert_almost_equal(rdtw.normalized_distance,pydtw.normalized_distance)
 
     def test_asymmetric_distance(self):
         """asymmetric distance
@@ -111,7 +113,7 @@ class TestDistance(unittest.TestCase):
                             self._assert_dist(pattern,win_name,win_size,open_begin,open_end)
 
     def test_symmetric_distance(self):
-        """symmetric distance (except for symmetric1 because unnormalizable)
+        """symmetric distance (except for symmetric1 because it's not normalizable)
         """
         sym_patterns = [pattern for pattern in self.patterns if pattern.find("asymmetric") == -1]
         sym_patterns.remove("symmetric1")

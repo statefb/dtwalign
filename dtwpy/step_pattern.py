@@ -96,7 +96,39 @@ class BasePattern():
 
     def _get_array(self):
         """
-        get pattern information as np.ndarray for numba.jit
+        get pattern information as np.ndarray
+        (number of patterns * max number of steps * 3(Node*2,Edge*1))
+        ex) in the case of asymmetricP1:
+                number of patterns: 3
+                max number of steps: 3
+            
+            ---------------
+               Node  | Edge
+            ---------|-----
+             -1 | -2 | ---
+            ----|----|-----
+              0 | -1 | 0.5
+            ----|----|-----
+              0 |  0 | 0.5
+            ---------------
+            ---------------
+               Node  | Edge
+            ---------|-----
+             -1 | -1 | ---
+            ----|----|-----
+              0 |  0 | 1.0
+            ----|----|-----
+              0 |  0 | ---
+            ---------------
+            ---------------
+               Node  | Edge
+            ---------|-----
+             -2 | -1 | ---
+            ----|----|-----
+             -1 |  0 | 1.0
+            ----|----|-----
+              0 |  0 | 1.0
+            ---------------
         """
         array = np.zeros([self.num_pattern,self.max_pattern_len,3],dtype="float")
         for pidx in range(self.num_pattern):

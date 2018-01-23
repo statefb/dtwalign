@@ -5,11 +5,11 @@ from dtwpy.window import *
 from test_data import gen_data
 
 #data_set
-open_begin_d = True
+open_begin_d = False
 open_end_d = False
 
 # dtw param
-open_begin = True
+open_begin = False
 open_end = False
 
 x1,y1,X = gen_data(open_begin=open_begin_d,open_end=open_end_d)
