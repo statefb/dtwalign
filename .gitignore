@@ -1,6 +1,5 @@
 __pycache__
-/dtwpy.egg-info/
+/dtwalign.egg-info/
 /build/
 /dist/
-/test/
 *.pptx

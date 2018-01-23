@@ -3,12 +3,13 @@ from setuptools import setup
 from setuptools import find_packages
 
 # meta info
-NAME = "dtwpy"
+NAME = "dtwalign"
 VERSION = "0.0.1"
 AUTHOR = "Takehiro Suzuki"
 AUTHOR_EMAIL = ""
 URL = ""
-DESCRIPTION = 'comprehensive dtw package for python'
+DESCRIPTION = 'DTW package for python which enables partial alignment'
+LICENSE = "MIT"
 
 
 def main():
@@ -36,6 +37,13 @@ def main():
         ],
         tests_require=[],
         setup_requires=[],
+        license=LICENSE,
+        classifiers = [
+            "Programming Language :: Python :: 3.5",
+            "Programming Language :: Python :: 3.6",
+            "License :: OSI Approved :: MIT License",
+            "Topic :: Scientific/Engineering",
+        ]
     )
 
 

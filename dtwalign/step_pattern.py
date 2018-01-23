@@ -404,7 +404,7 @@ class TypeIa(BasePattern):
             weights = [1,0]
         )
     ]
-    normalization_guide = "none"
+    normalize_guide = "none"
 
     def __init__(self):
         super().__init__()
@@ -425,7 +425,7 @@ class TypeIb(BasePattern):
             weights = [1,1]
         ),
     ]
-    normalization_guide = "none"
+    normalize_guide = "none"
 
     def __init__(self):
         super().__init__()
@@ -446,7 +446,7 @@ class TypeIc(BasePattern):
             weights = [1,0]
         ),
     ]
-    normalization_guide = "N"
+    normalize_guide = "N"
 
     def __init__(self):
         super().__init__()
@@ -467,7 +467,7 @@ class TypeId(BasePattern):
             weights = [2,1]
         ),
     ]
-    normalization_guide = "N+M"
+    normalize_guide = "N+M"
 
     def __init__(self):
         super().__init__()
@@ -488,7 +488,7 @@ class TypeIas(BasePattern):
             weights = [0.5,0.5]
         ),
     ]
-    normalization_guide = "none"
+    normalize_guide = "none"
 
     def __init__(self):
         super().__init__()
@@ -509,7 +509,7 @@ class TypeIbs(BasePattern):
             weights = [1,1]
         ),
     ]
-    normalization_guide = "none"
+    normalize_guide = "none"
 
     def __init__(self):
         super().__init__()
@@ -530,7 +530,7 @@ class TypeIcs(BasePattern):
             weights = [0.5,0.5]
         ),
     ]
-    normalization_guide = "N"
+    normalize_guide = "N"
 
     def __init__(self):
         super().__init__()
@@ -551,7 +551,7 @@ class TypeIds(BasePattern):
             weights = [1.5]
         ),
     ]
-    normalization_guide = "N+M"
+    normalize_guide = "N+M"
 
     def __init__(self):
         super().__init__()
@@ -572,7 +572,7 @@ class TypeIIa(BasePattern):
             weights = [1]
         ),
     ]
-    normalization_guide = "none"
+    normalize_guide = "none"
 
     def __init__(self):
         super().__init__()
@@ -593,7 +593,7 @@ class TypeIIb(BasePattern):
             weights = [2]
         ),
     ]
-    normalization_guide = "none"
+    normalize_guide = "none"
 
     def __init__(self):
         super().__init__()
@@ -614,7 +614,7 @@ class TypeIIc(BasePattern):
             weights = [2]
         ),
     ]
-    normalization_guide = "none"
+    normalize_guide = "none"
 
     def __init__(self):
         super().__init__()
@@ -635,7 +635,7 @@ class TypeIId(BasePattern):
             weights = [3]
         ),
     ]
-    normalization_guide = "N+M"
+    normalize_guide = "N+M"
 
     def __init__(self):
         super().__init__()
@@ -660,7 +660,7 @@ class TypeIIIc(BasePattern):
             weights = [1,1]
         ),
     ]
-    normalization_guide = "N"
+    normalize_guide = "N"
 
     def __init__(self):
         super().__init__()
@@ -681,7 +681,7 @@ class TypeIb(BasePattern):
             weights = []
         ),
     ]
-    normalization_guide = "none"
+    normalize_guide = "none"
 
     def __init__(self):
         super().__init__()
@@ -726,7 +726,7 @@ class TypeIVc(BasePattern):
             weights = [1,1,1]
         ),
     ]
-    normalization_guide = "N"
+    normalize_guide = "N"
 
     def __init__(self):
         super().__init__()
@@ -747,7 +747,7 @@ class Mori2006(BasePattern):
             weights = [3,3]
         ),
     ]
-    normalization_guide = "M"
+    normalize_guide = "M"
 
     def __init__(self):
         super().__init__()
