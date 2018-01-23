@@ -1,100 +1,107 @@
 # -*- coding: utf-8 -*-
 
 from scipy.spatial.distance import cdist
-from .cost import _calc_cumsum_matrix_py,_calc_cumsum_matrix_jit
-from .backtrack import _backtrack_py,_backtrack_jit
+from .cost import _calc_cumsum_matrix_jit
+from .backtrack import _backtrack_jit
 from .step_pattern import *
 from .window import *
 from .result import DtwResult
 from .distance import _get_alignment_distance
 
 def dtw(x,y,dist="euclidean",window_type="none",window_size=None,step_pattern="symmetric2",\
-    dist_only=False,open_begin=False,open_end=False,approx=False):
-    """high-level dtw interface
+    dist_only=False,open_begin=False,open_end=False):
+    """Perform dtw
 
     Parameters
     ----------
     x : 1D or 2D array (sample * feature)
-        query time series
-    y : 1D or 2D array (sample * feature)
-        reference time series
-    dist : string or function
-        define how to calclulate pair-wise distance between x and y
-        string : metric argument of scipy.spatial.distance
-        function : user defined function. argument must be 2D array (sample * feature)
-            ex) user_func(a,b) : a and b are 2D array
-    window_type : string
-        define window type
-    window_size : int
-    step_pattern : string
-    dist_only : bool
-    open_begin : bool
-    open_end : bool
-    approx : bool
+        Query time series.
 
-    Returns
-    -------
-    DtwResult
+    y : 1D or 2D array (sample * feature)
+        Reference time series.
+
+    dist : string or function
+        Define how to calclulate pair-wise distance between x and y.
+        string - metric argument of scipy.spatial.distance
+        function - user function that defines metric between two samples.
+            ex) euclidean distance: user_func = lambda x,y : np.sqrt((x-y)**2)
+
+    window_type : string
+        Window type to use.
+        "sakoechiba" - Sakoechiba window
+        "itakura" - Itakura window
+
+    window_size : int
+        Window size to use for Sakoechiba window.
+
+    step_pattern : string
+        Step pattern to use.
+
+    dist_only : bool
+        Whether or not to obtain warping path. If true,
+        only alignment distance will be calculated.
+
+    open_begin : bool
+        Whether or not perform open-ended alignment at the starting point of
+        query time series. If true, partial alignment will be performed.
+
+    open_end : bool
+        Whether or not perform open-ended alignment at the end point of
+        query time series. If true, partial alignment will be performed.
 
     """
     len_x = x.shape[0]; len_y = y.shape[0]
+    # if 1D array, convert to 2D array
     if x.ndim == 1: x = x[:,np.newaxis]
     if y.ndim == 1: y = y[:,np.newaxis]
 
     # get pair-wise cost matrix
     if type(dist) == str:
+        # scipy
         X = cdist(x,y,metric=dist)
     else:
-        # TODO: for efficiency, only window cell should be calculated
-        X = np.zeros([len_x,len_y])
-        for xidx in range(len_x):
-            for yidx in range(len_y):
-                X[xidx,yidx] = dist(x[xidx,:],y[yidx,:])
+        # user defined metric
+        window = _get_window(window_type,window_size,len_x,len_y)
+        X = np.ones([len_x,len_y]) * np.inf
+        for i,j in window.list:
+            X[i,j] = dist(x[i,:],y[j,:])
 
     return dtw_from_distance_matrix(X,window_type,window_size,step_pattern,dist_only,\
-        open_begin,open_end,approx)
+        open_begin,open_end)
 
 def dtw_from_distance_matrix(X,window_type="none",window_size=None,step_pattern="symmetric2",\
-    dist_only=False,open_begin=False,open_end=False,approx=False):
-    """run dtw from distance matrix
+    dist_only=False,open_begin=False,open_end=False):
+    """Perform dtw using pre-computed pair-wise distance matrix
 
     Parameters
     ----------
     X : 2D array
         pre-computed pair-wise distance matrix
+
     others : see dtw function
 
     """
     len_x,len_y = X.shape
     window = _get_window(window_type,window_size,len_x,len_y)
     pattern = _get_pattern(step_pattern)
-    return dtw_low(X,window,pattern,dist_only,open_begin,open_end,approx)
+    return dtw_low(X,window,pattern,dist_only,open_begin,open_end)
 
 def dtw_low(X,window,pattern,dist_only=False,\
-    open_begin=False,open_end=False,approx=False):
-    """low-level dtw interface
+    open_begin=False,open_end=False):
+    """Low-level dtw interface
 
     Parameters
     ----------
     X : 2D array
-        pair-wise cost matrix
+        pair-wise distance matrix
+
     window : dtwpy.window.BaseWindow object
         window object
+
     pattern : dtwpy.step_pattern.BasePattern object
         step pattern object
-    dist_only : bool
-        if true, only alignment cost will be calculated
-    approx : bool
-        if true, use fast-dtw
-    open_begin : bool
-    open_end : bool
 
-    Returns
-    -------
-    result : DtwResult
-
-    Notes
-    -----
+    others : see dtw function
 
     """
     # validation
@@ -111,7 +118,9 @@ def dtw_low(X,window,pattern,dist_only=False,\
         if not pattern.is_normalizable:
             raise ValueError("open-end alignment requires normalizable step pattern")
 
+    # compute cumsum distance matrix
     D = _calc_cumsum_matrix_jit(X,window.list,pattern.array,open_begin)
+    # get alignment distance
     dist,normalized_dist,last_idx = _get_alignment_distance(D,pattern,open_begin,open_end)
 
     if dist_only:
@@ -119,6 +128,7 @@ def dtw_low(X,window,pattern,dist_only=False,\
         if open_begin:
             D = D[1:,:]
     else:
+        # backtrack to obtain warping path
         path = _backtrack_jit(D,pattern.array,last_idx)
         if open_begin:
             D = D[1:,:]
@@ -126,7 +136,7 @@ def dtw_low(X,window,pattern,dist_only=False,\
             path[:,0] -= 1
 
     result = DtwResult(D,path,window,pattern)
-    # set some properties
+    # set distance properties
     result.distance = dist
     result.normalized_distance = normalized_dist
 
@@ -165,5 +175,35 @@ def _get_pattern(pattern_str):
         return AsymmetricP1()
     elif pattern_str == "asymmetricP2":
         return AsymmetricP2()
+    elif pattern_str == "typeIa":
+        return TypeIa()
+    elif pattern_str == "typeIb":
+        return TypeIb()
+    elif pattern_str == "typeIc":
+        return TypeIc()
+    elif pattern_str == "typeId":
+        return TypeId()
+    elif pattern_str == "typeIas":
+        return TypeIas()
+    elif pattern_str == "typeIbs":
+        return TypeIbs()
+    elif pattern_str == "typeIcs":
+        return TypeIcs()
+    elif pattern_str == "typeIds":
+        return TypeIds()
+    elif pattern_str == "typeIIa":
+        return TypeIIa()
+    elif pattern_str == "typeIIb":
+        return TypeIIb()
+    elif pattern_str == "typeIIc":
+        return TypeIIc()
+    elif pattern_str == "typeIId":
+        return TypeIId()
+    elif pattern_str == "typeIIIc":
+        return TypeIIIc()
+    elif pattern_str == "typeIVc":
+        return TypeIVc()
+    elif pattern_str == "mori2006":
+        return Mori2006()
     else:
         raise NotImplementedError("given step pattern not supported")

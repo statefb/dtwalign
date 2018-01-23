@@ -101,7 +101,7 @@ class BasePattern():
         ex) in the case of asymmetricP1:
                 number of patterns: 3
                 max number of steps: 3
-            
+
             ---------------
                Node  | Edge
             ---------|-----
@@ -384,6 +384,370 @@ class AsymmetricP2(BasePattern):
         )
     ]
     normalize_guide = "N"
+
+    def __init__(self):
+        super().__init__()
+
+class TypeIa(BasePattern):
+    label = "typeIa"
+    pattern_info = [
+        dict(
+            indices = [(-2,-1),(-1,0),(0,0)],
+            weights = [1,0]
+        ),
+        dict(
+            indices = [(-1,-1),(0,0)],
+            weights = [1]
+        ),
+        dict(
+            indices = [(-1,-2),(0,-1),(0,0)],
+            weights = [1,0]
+        )
+    ]
+    normalization_guide = "none"
+
+    def __init__(self):
+        super().__init__()
+
+class TypeIb(BasePattern):
+    label = "typeIb"
+    pattern_info = [
+        dict(
+            indices = [(-2,-1),(-1,0),(0,0)],
+            weights = [1,1]
+        ),
+        dict(
+            indices = [(-1,-1),(0,0)],
+            weights = [1]
+        ),
+        dict(
+            indices = [(-1,-2),(0,-1),(0,0)],
+            weights = [1,1]
+        ),
+    ]
+    normalization_guide = "none"
+
+    def __init__(self):
+        super().__init__()
+
+class TypeIc(BasePattern):
+    label = "typeIc"
+    pattern_info = [
+        dict(
+            indices = [(-2,-1),(-1,0),(0,0)],
+            weights = [1,1]
+        ),
+        dict(
+            indices = [(-1,-1),(0,0)],
+            weights = [1]
+        ),
+        dict(
+            indices = [(-1,-2),(0,-1),(0,0)],
+            weights = [1,0]
+        ),
+    ]
+    normalization_guide = "N"
+
+    def __init__(self):
+        super().__init__()
+
+class TypeId(BasePattern):
+    label = "typeIb"
+    pattern_info = [
+        dict(
+            indices = [(-2,-1),(-1,0),(0,0)],
+            weights = [2,1]
+        ),
+        dict(
+            indices = [(-1,-1),(0,0)],
+            weights = [2]
+        ),
+        dict(
+            indices = [(-1,-2),(0,-1),(0,0)],
+            weights = [2,1]
+        ),
+    ]
+    normalization_guide = "N+M"
+
+    def __init__(self):
+        super().__init__()
+
+class TypeIas(BasePattern):
+    label = "typeIas"
+    pattern_info = [
+        dict(
+            indices = [(-2,-1),(-1,0),(0,0)],
+            weights = [0.5,0.5]
+        ),
+        dict(
+            indices = [(-1,-1),(0,0)],
+            weights = [1]
+        ),
+        dict(
+            indices = [(-1,-2),(0,-1),(0,0)],
+            weights = [0.5,0.5]
+        ),
+    ]
+    normalization_guide = "none"
+
+    def __init__(self):
+        super().__init__()
+
+class TypeIbs(BasePattern):
+    label = "typeIbs"
+    pattern_info = [
+        dict(
+            indices = [(-2,-1),(-1,0),(0,0)],
+            weights = [1,1]
+        ),
+        dict(
+            indices = [(-1,-1),(0,0)],
+            weights = [1]
+        ),
+        dict(
+            indices = [(-1,-2),(0,-1),(0,0)],
+            weights = [1,1]
+        ),
+    ]
+    normalization_guide = "none"
+
+    def __init__(self):
+        super().__init__()
+
+class TypeIcs(BasePattern):
+    label = "typeIcs"
+    pattern_info = [
+        dict(
+            indices = [(-2,-1),(-1,0),(0,0)],
+            weights = [1,1]
+        ),
+        dict(
+            indices = [(-1,-1),(0,0)],
+            weights = [1]
+        ),
+        dict(
+            indices = [(-1,-2),(0,-1),(0,0)],
+            weights = [0.5,0.5]
+        ),
+    ]
+    normalization_guide = "N"
+
+    def __init__(self):
+        super().__init__()
+
+class TypeIds(BasePattern):
+    label = "typeIds"
+    pattern_info = [
+        dict(
+            indices = [(-2,-1),(-1,0),(0,0)],
+            weights = [1.5,1.5]
+        ),
+        dict(
+            indices = [(-1,-1),(0,0)],
+            weights = [2]
+        ),
+        dict(
+            indices = [(-1,-2),(0,-1),(0,0)],
+            weights = [1.5]
+        ),
+    ]
+    normalization_guide = "N+M"
+
+    def __init__(self):
+        super().__init__()
+
+class TypeIIa(BasePattern):
+    label = "typeIIa"
+    pattern_info = [
+        dict(
+            indices = [(-1,-1),(0,0)],
+            weights = [1]
+        ),
+        dict(
+            indices = [(-1,-2),(0,0)],
+            weights = [1]
+        ),
+        dict(
+            indices = [(-2,-1),(0,0)],
+            weights = [1]
+        ),
+    ]
+    normalization_guide = "none"
+
+    def __init__(self):
+        super().__init__()
+
+class TypeIIb(BasePattern):
+    label = "typeIb"
+    pattern_info = [
+        dict(
+            indices = [(-1,-1),(0,0)],
+            weights = [1]
+        ),
+        dict(
+            indices = [(-1,-2),(0,0)],
+            weights = [2]
+        ),
+        dict(
+            indices = [(-2,-1),(0,0)],
+            weights = [2]
+        ),
+    ]
+    normalization_guide = "none"
+
+    def __init__(self):
+        super().__init__()
+
+class TypeIIc(BasePattern):
+    label = "typeIIc"
+    pattern_info = [
+        dict(
+            indices = [(-1,-1),(0,0)],
+            weights = [1]
+        ),
+        dict(
+            indices = [(-1,-2),(0,0)],
+            weights = [2]
+        ),
+        dict(
+            indices = [(-2,-1),(0,0)],
+            weights = [2]
+        ),
+    ]
+    normalization_guide = "none"
+
+    def __init__(self):
+        super().__init__()
+
+class TypeIId(BasePattern):
+    label = "typeIId"
+    pattern_info = [
+        dict(
+            indices = [(-1,-1),(0,0)],
+            weights = [2]
+        ),
+        dict(
+            indices = [(-1,-2),(0,0)],
+            weights = [3]
+        ),
+        dict(
+            indices = [(-2,-1),(0,0)],
+            weights = [3]
+        ),
+    ]
+    normalization_guide = "N+M"
+
+    def __init__(self):
+        super().__init__()
+
+class TypeIIIc(BasePattern):
+    label = "typeIIIc"
+    pattern_info = [
+        dict(
+            indices = [(-1,-2),(0,0)],
+            weights = [1]
+        ),
+        dict(
+            indices = [(-1,-1),(0,0)],
+            weights = [1]
+        ),
+        dict(
+            indices = [(-2,-1),(-1,0),(0,0)],
+            weights = [1,1]
+        ),
+        dict(
+            indices = [(-2,-2),(-1,0),(0,0)],
+            weights = [1,1]
+        ),
+    ]
+    normalization_guide = "N"
+
+    def __init__(self):
+        super().__init__()
+
+class TypeIb(BasePattern):
+    label = "typeIb"
+    pattern_info = [
+        dict(
+            indices = [],
+            weights = []
+        ),
+        dict(
+            indices = [],
+            weights = []
+        ),
+        dict(
+            indices = [],
+            weights = []
+        ),
+    ]
+    normalization_guide = "none"
+
+    def __init__(self):
+        super().__init__()
+
+class TypeIVc(BasePattern):
+    label = "typeIVc"
+    pattern_info = [
+        dict(
+            indices = [(-1,-1),(0,0)],
+            weights = [1]
+        ),
+        dict(
+            indices = [(-1,-2),(0,0)],
+            weights = [1]
+        ),
+        dict(
+            indices = [(-1,-3),(0,0)],
+            weights = [1]
+        ),
+        dict(
+            indices = [(-2,-1),(-1,0),(0,0)],
+            weights = [1,1]
+        ),
+        dict(
+            indices = [(-2,-2),(-1,0),(0,0)],
+            weights = [1,1]
+        ),
+        dict(
+            indices = [(-2,-3),(-1,0),(0,0)],
+            weights = [1,1]
+        ),
+        dict(
+            indices = [(-3,-1),(-2,0),(-1,0),(0,0)],
+            weights = [1,1,1]
+        ),
+        dict(
+            indices = [(-3,-2),(-2,0),(-1,0),(0,0)],
+            weights = [1,1,1]
+        ),
+        dict(
+            indices = [(-3,-3),(-2,0),(-1,0),(0,0)],
+            weights = [1,1,1]
+        ),
+    ]
+    normalization_guide = "N"
+
+    def __init__(self):
+        super().__init__()
+
+class Mori2006(BasePattern):
+    label = "mori2006"
+    pattern_info = [
+        dict(
+            indices = [(-2,-1),(-1,0),(0,0)],
+            weights = [2,1]
+        ),
+        dict(
+            indices = [(-1,-1),(0,0)],
+            weights = [3]
+        ),
+        dict(
+            indices = [(-1,-2),(0,-1),(0,0)],
+            weights = [3,3]
+        ),
+    ]
+    normalization_guide = "M"
 
     def __init__(self):
         super().__init__()

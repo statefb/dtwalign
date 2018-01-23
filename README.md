@@ -1,4 +1,5 @@
-# fast-dtw for Python test repository
+# Python DTW
 
 TODO:
+* step pattern test
 * fastdtw
