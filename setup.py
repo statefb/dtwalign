@@ -1,16 +1,20 @@
 # -*- coding: utf-8 -*-
+import os
 from setuptools import setup
 from setuptools import find_packages
 
 # meta info
 NAME = "dtwalign"
-VERSION = "0.0.1"
+VERSION = "0.0.2"
 AUTHOR = "Takehiro Suzuki"
 AUTHOR_EMAIL = ""
 URL = ""
 DESCRIPTION = 'DTW package for python which enables partial alignment'
-LICENSE = "MIT"
+LICENSE = ""
 
+if not os.path.exists('README.txt'):
+    os.system("pandoc -o README.txt README.md")
+LONG_DESCRIPTION = open('README.txt').read()
 
 def main():
 
@@ -21,6 +25,7 @@ def main():
         author_email=AUTHOR_EMAIL,
         url=URL,
         description=DESCRIPTION,
+        long_description = LONG_DESCRIPTION,
         zip_safe=False,
         include_package_data=True,
         packages=find_packages(),
@@ -41,7 +46,7 @@ def main():
         classifiers = [
             "Programming Language :: Python :: 3.5",
             "Programming Language :: Python :: 3.6",
-            "License :: OSI Approved :: MIT License",
+            # "License :: OSI Approved :: MIT License",
             "Topic :: Scientific/Engineering",
         ]
     )
