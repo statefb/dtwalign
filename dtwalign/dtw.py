@@ -95,10 +95,10 @@ def dtw_low(X,window,pattern,dist_only=False,\
     X : 2D array
         pair-wise distance matrix
 
-    window : dtwpy.window.BaseWindow object
+    window : dtwalign.window.BaseWindow object
         window object
 
-    pattern : dtwpy.step_pattern.BasePattern object
+    pattern : dtwalign.step_pattern.BasePattern object
         step pattern object
 
     others : see dtw function

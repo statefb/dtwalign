@@ -4,9 +4,9 @@
 import unittest
 from numpy.testing import assert_almost_equal
 
-from dtwpy import dtw
-from dtwpy.step_pattern import *
-from dtwpy.window import *
+from dtwalign import dtw
+from dtwalign.step_pattern import *
+from dtwalign.window import *
 from test_data import gen_data
 from rdtw import DtwR
 

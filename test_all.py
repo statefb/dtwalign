@@ -1,7 +1,7 @@
 import numpy as np
-from dtwpy import dtw,dtw_low
-from dtwpy.step_pattern import *
-from dtwpy.window import *
+from dtwalign import dtw,dtw_low
+from dtwalign.step_pattern import *
+from dtwalign.window import *
 from test_data import gen_data
 
 #data_set
