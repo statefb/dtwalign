@@ -751,3 +751,16 @@ class Mori2006(BasePattern):
 
     def __init__(self):
         super().__init__()
+
+class Unitary(BasePattern):
+    label = "unitary"
+    pattern_info = [
+        dict(
+            indices = [(-1,-1),(0,0)],
+            weights = [1]
+        ),
+    ]
+    normalize_guide = "N"
+
+    def __init__(self):
+        super().__init__()

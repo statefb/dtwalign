@@ -205,5 +205,7 @@ def _get_pattern(pattern_str):
         return TypeIVc()
     elif pattern_str == "mori2006":
         return Mori2006()
+    elif pattern_str == "unitary":
+        return Unitary()
     else:
         raise NotImplementedError("given step pattern not supported")
