@@ -2,8 +2,9 @@
 Comprehensive dynamic time warping module for python.
 
 ## Features
-* Fast computation by [Numba](https://numba.pydata.org)
-* Partial alignment
+#### Fast computation
+by [Numba](https://numba.pydata.org)
+#### Partial alignment
 
   - before alignment
 ![](img/partial_org.png)
@@ -11,15 +12,15 @@ Comprehensive dynamic time warping module for python.
   - after alignment
 ![](img/partial_res.png)
 
-* Local constraint(Step pattern)
+#### Local constraint(Step pattern)
 
 example:
 
 | Symmetric2 | AsymmetricP2 | TypeIVc |
 |:-----------:|:------------:|:------------:|
-| ![](img/symmetric2.png) | ![](img/AsymmetricP2.png) | ![](img/typeIVc.png) |
+| ![](img/symmetric2.png) | ![](img/asymmetricP2.png) | ![](img/typeIVc.png) |
 
-* Global constraint
+#### Global constraint
 
 example:
 
@@ -27,7 +28,7 @@ example:
 |:-----------:|:------------:|:------------:|
 | ![](img/sakoechiba.png) | ![](img/itakura.png) | ![](img/user_win.png) |
 
-* Alignment path visualization
+#### Alignment path visualization
 ![](img/partial_path.png)
 
 ## Usage

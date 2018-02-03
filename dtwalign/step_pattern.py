@@ -764,3 +764,42 @@ class Unitary(BasePattern):
 
     def __init__(self):
         super().__init__()
+
+class UserStepPattern(BasePattern):
+    label = "user defined step pattern"
+
+    def __init__(self,pattern_info,normalize_guide):
+        """user defined step pattern
+
+        Parameters
+        ----------
+        pattern_info : list
+            list contains pattern information.
+            ex) the case of symmetric2 pattern:
+                pattern_info = [
+                    dict(
+                        indices=[(-1,0),(0,0)],
+                        weights=[1]
+                    ),
+                    dict(
+                        indices=[(-1,-1),(0,0)],
+                        weights=[2]
+                    ),
+                    dict(
+                        indices=[(0,-1),(0,0)],
+                        weights=[1]
+                    )
+                ]
+
+        normalize_guide : string ('N','M','N+M','none')
+            guide to compute normalized distance.
+
+        """
+        # validation
+        if normalize_guide not in ("N","M","N+M","none"):
+            raise ValueError("normalize_guide argument must be \
+                one of followings: 'N','M','N+M','none'")
+
+        self.pattern_info = pattern_info
+        self.normalize_guide = normalize_guide
+        super.__init__()
