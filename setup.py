@@ -5,12 +5,12 @@ from setuptools import find_packages
 
 # meta info
 NAME = "dtwalign"
-VERSION = "0.0.2"
+VERSION = "0.0.5"
 AUTHOR = "Takehiro Suzuki"
 AUTHOR_EMAIL = ""
-URL = ""
-DESCRIPTION = 'DTW package for python which enables partial alignment'
-LICENSE = ""
+URL = "https://github.com/statefb/dtwalign"
+DESCRIPTION = 'Comprehensive DTW package which enables partial mathing and has various constraint options'
+LICENSE = "GPL v2"
 
 if not os.path.exists('README.txt'):
     os.system("pandoc -o README.txt README.md")
@@ -46,7 +46,7 @@ def main():
         classifiers = [
             "Programming Language :: Python :: 3.5",
             "Programming Language :: Python :: 3.6",
-            # "License :: OSI Approved :: MIT License",
+            "License :: OSI Approved :: GNU General Public License v2 (GPLv2)",
             "Topic :: Scientific/Engineering",
         ]
     )

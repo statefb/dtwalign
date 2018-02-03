@@ -15,7 +15,7 @@ by [Numba](https://numba.pydata.org)
 
 ![](img/partial_res.png)
 
-### Local constraint(Step pattern)
+### Local constraint (step pattern)
 ---
 example:
 
@@ -23,7 +23,7 @@ example:
 |:-----------:|:------------:|:------------:|
 | ![](img/symmetric2.png) | ![](img/asymmetricP2.png) | ![](img/typeIVc.png) |
 
-### Global constraint
+### Global constraint (windowing)
 ---
 example:
 
