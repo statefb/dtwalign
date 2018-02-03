@@ -5,11 +5,13 @@ Comprehensive dynamic time warping module for python.
 #### Fast computation
 by [Numba](https://numba.pydata.org)
 #### Partial alignment
-
+---
   - before alignment
+
 ![](img/partial_org.png)
 
   - after alignment
+
 ![](img/partial_res.png)
 
 #### Local constraint(Step pattern)
