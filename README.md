@@ -2,7 +2,9 @@
 Comprehensive dynamic time warping module for python.
 
 ## Installation
-`pip install dtwalign`
+```
+pip install dtwalign
+```
 
 ## Features
 ### Fast computation
