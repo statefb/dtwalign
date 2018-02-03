@@ -802,4 +802,8 @@ class UserStepPattern(BasePattern):
 
         self.pattern_info = pattern_info
         self.normalize_guide = normalize_guide
-        super.__init__()
+        # number of patterns
+        self.num_pattern = len(self.pattern_info)
+        # max length of pattern
+        self.max_pattern_len = max([len(pi["indices"]) for pi in self.pattern_info])
+        self._get_array()
