@@ -1,6 +1,9 @@
 # DTW (Dynamic Time Warping)
 Comprehensive dynamic time warping module for python.
 
+## Installation
+`pip install dtwalign`
+
 ## Features
 ### Fast computation
 ---
@@ -36,7 +39,7 @@ example:
 ![](img/partial_path.png)
 
 ## Usage
-see [example](./example.html)
+see [example](./example.ipynb)
 
 ## Reference
 1. Sakoe, H.; Chiba, S., Dynamic programming algorithm optimization for spoken word recognition, Acoustics, Speech, and Signal Processing
