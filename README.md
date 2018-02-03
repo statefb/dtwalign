@@ -1,16 +1,39 @@
 # DTW (Dynamic Time Warping)
-This is a comprehensive dynamic time warping module for python.
+Comprehensive dynamic time warping module for python.
 
 ## Features
-* Fast computation of DTW distance by numba.jit
-* Partial alignment[^1]
-* Various step patterns
+* Fast computation by [Numba](https://numba.pydata.org)
+* Partial alignment
+
+  - before alignment
+![](img/partial_org.png)
+
+  - after alignment
+![](img/partial_res.png)
+
+* Local constraint(Step pattern)
+
+example:
+
+| Symmetric2 | AsymmetricP2 | TypeIVc |
+|:-----------:|:------------:|:------------:|
+| ![](img/symmetric2.png) | ![](img/AsymmetricP2.png) | ![](img/typeIVc.png) |
+
 * Global constraint
+
+example:
+
+| Sakoechiba | Itakura | User defined |
+|:-----------:|:------------:|:------------:|
+| ![](img/sakoechiba.png) | ![](img/itakura.png) | ![](img/user_win.png) |
+
 * Alignment path visualization
-* Warp one to the other
+![](img/partial_path.png)
 
 ## Usage
 see [example](./example.ipynb)
 
 ## Reference
-[^1]: Paolo Tormene, Toni Giorgino, Silvana Quaglini, Mario Stefanelli (2008). Matching Incomplete Time Series with Dynamic Time Warping: An Algorithm and an Application to Post-Stroke Rehabilitation. Artificial Intelligence in Medicine, 45(1), 11-34. doi:10.1016/j.artmed.2008.11.007
+1. Paolo Tormene, Toni Giorgino, Silvana Quaglini, Mario Stefanelli (2008). Matching Incomplete Time Series with Dynamic Time Warping: An Algorithm and an Application to Post-Stroke Rehabilitation. Artificial Intelligence in Medicine, 45(1), 11-34.
+
+2. Toni Giorgino (2009). Computing and Visualizing Dynamic Time Warping Alignments in R: The dtw Package. Journal of Statistical Software, 31(7), 1-24.
