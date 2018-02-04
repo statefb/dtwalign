@@ -5,3 +5,4 @@ __pycache__
 *.pptx
 register.py
 .ipynb_checkpoints
+.pypirc
