@@ -41,7 +41,7 @@ example:
 ![](img/partial_path.png)
 
 ## Usage
-see [example](./example/example.ipynb)
+see [example](./example/markdown/example.md)
 
 ## Reference
 1. Sakoe, H.; Chiba, S., Dynamic programming algorithm optimization for spoken word recognition, Acoustics, Speech, and Signal Processing
