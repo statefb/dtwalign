@@ -41,7 +41,7 @@ example:
 ![](img/partial_path.png)
 
 ## Usage
-see [example](https://htmlpreview.github.io/?./example/example.html)
+see [example](https://htmlpreview.github.io/?https://github.com/statefb/dtwalign/blob/master/example/example.html)
 
 ## Reference
 1. Sakoe, H.; Chiba, S., Dynamic programming algorithm optimization for spoken word recognition, Acoustics, Speech, and Signal Processing
