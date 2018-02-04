@@ -5,7 +5,7 @@ from setuptools import find_packages
 
 # meta info
 NAME = "dtwalign"
-VERSION = "0.0.5"
+VERSION = "0.0.6"
 AUTHOR = "Takehiro Suzuki"
 AUTHOR_EMAIL = ""
 URL = "https://github.com/statefb/dtwalign"

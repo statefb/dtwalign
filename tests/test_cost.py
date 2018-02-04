@@ -5,6 +5,7 @@ import unittest
 from numpy.testing import assert_almost_equal
 
 from dtwalign import dtw
+from dtwalign.dtw import _get_pattern
 from dtwalign.step_pattern import *
 from dtwalign.window import *
 from test_data import gen_data
@@ -64,7 +65,20 @@ class TestDistance(unittest.TestCase):
             "asymmetricP0",
             "asymmetricP05",
             "asymmetricP1",
-            "asymmetricP2"
+            "asymmetricP2",
+            "typeIa",
+            "typeIb",
+            "typeIas",
+            "typeIbs",
+            "typeIcs",
+            "typeIds",
+            "typeIIa",
+            "typeIIb",
+            "typeIIc",
+            "typeIId",
+            "typeIIIc",
+            "typeIVc",
+            "mori2006"
         ]
 
     def _gen_window(self):
@@ -99,16 +113,17 @@ class TestDistance(unittest.TestCase):
             )
             # assert
             assert_almost_equal(rdtw.distance,pydtw.distance)
-            if pattern != "symmetric1":
+
+            if _get_pattern(pattern).is_normalizable:
                 """
-                symmetric1 pattern is not normalizable
+                only normalizable pattern can be asserted for normalization
                 """
                 assert_almost_equal(rdtw.normalized_distance,pydtw.normalized_distance)
 
     def test_asymmetric_distance(self):
         """asymmetric distance
         """
-        asym_patterns = [pattern for pattern in self.patterns if pattern.find("asymmetric") != -1]
+        asym_patterns = [pattern for pattern in self.patterns if pattern.find("asymmetric") == 0]
         for pattern in asym_patterns:
             for win_name,win_size in self.windows.items():
                 for open_begin in [False,True]:
@@ -120,11 +135,21 @@ class TestDistance(unittest.TestCase):
     def test_symmetric_distance(self):
         """symmetric distance (except for symmetric1 because it's not normalizable)
         """
-        sym_patterns = [pattern for pattern in self.patterns if pattern.find("asymmetric") == -1]
-        sym_patterns.remove("symmetric1")
+        sym_patterns = [pattern for pattern in self.patterns if pattern.find("symmetric") == 0]
+        # sym_patterns.remove("symmetric1")
         for pattern in sym_patterns:
             for win_name,win_size in self.windows.items():
                 for open_begin in [False]:  # open-begin requires 'N' normalizable pattern
+                    for open_end in [False,True]:
+                        with self.subTest(pattern=pattern,win_name=win_name,\
+                            win_size=win_size,open_begin=open_begin,open_end=open_end):
+                            self._assert_dist(pattern,win_name,win_size,open_begin,open_end)
+
+    def test_myers_distance(self):
+        myers_patterns = [pattern for pattern in self.patterns if pattern.find("type") == 0]
+        for pattern in myers_patterns:
+            for win_name,win_size in self.windows.items():
+                for open_begin in [False,True]:
                     for open_end in [False,True]:
                         with self.subTest(pattern=pattern,win_name=win_name,\
                             win_size=win_size,open_begin=open_begin,open_end=open_end):

@@ -452,7 +452,7 @@ class TypeIc(BasePattern):
         super().__init__()
 
 class TypeId(BasePattern):
-    label = "typeIb"
+    label = "typeId"
     pattern_info = [
         dict(
             indices = [(-2,-1),(-1,0),(0,0)],
@@ -548,7 +548,7 @@ class TypeIds(BasePattern):
         ),
         dict(
             indices = [(-1,-2),(0,-1),(0,0)],
-            weights = [1.5]
+            weights = [1.5,1.5]
         ),
     ]
     normalize_guide = "N+M"
@@ -578,15 +578,15 @@ class TypeIIa(BasePattern):
         super().__init__()
 
 class TypeIIb(BasePattern):
-    label = "typeIb"
+    label = "typeIIb"
     pattern_info = [
         dict(
             indices = [(-1,-1),(0,0)],
-            weights = [1]
+            weights = [2]
         ),
         dict(
             indices = [(-1,-2),(0,0)],
-            weights = [2]
+            weights = [1]
         ),
         dict(
             indices = [(-2,-1),(0,0)],
@@ -611,7 +611,7 @@ class TypeIIc(BasePattern):
         ),
         dict(
             indices = [(-2,-1),(0,0)],
-            weights = [2]
+            weights = [1]
         ),
     ]
     normalize_guide = "none"
@@ -661,27 +661,6 @@ class TypeIIIc(BasePattern):
         ),
     ]
     normalize_guide = "N"
-
-    def __init__(self):
-        super().__init__()
-
-class TypeIb(BasePattern):
-    label = "typeIb"
-    pattern_info = [
-        dict(
-            indices = [],
-            weights = []
-        ),
-        dict(
-            indices = [],
-            weights = []
-        ),
-        dict(
-            indices = [],
-            weights = []
-        ),
-    ]
-    normalize_guide = "none"
 
     def __init__(self):
         super().__init__()
