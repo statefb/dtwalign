@@ -84,8 +84,8 @@ class TestDistance(unittest.TestCase):
     def _gen_window(self):
         self.windows = dict(
             sakoechiba=20,
-            itakura=None,
-            none=None
+            itakura=20,
+            none="none"
         )
 
     def _assert_dist(self,pattern,win_name,win_size,open_begin,open_end):
@@ -93,11 +93,22 @@ class TestDistance(unittest.TestCase):
             """
             Results with open-begin and using window differ between R and Python because
             R implementation doesn't consider zero-padded row separately
+            (there should be no problem in practical use...)
             """
             pass
         elif (open_begin or open_end) and win_name == "itakura":
             """
             itakura window requires closed end
+            """
+            pass
+        elif (open_begin or open_end) and not _get_pattern(pattern).is_normalizable:
+            """
+            partial matching requires normalizable step pattern
+            """
+            pass
+        elif open_begin and _get_pattern(pattern).normalize_guide != "N":
+            """
+            open-begin matching requires "N"-normalizable step pattern
             """
             pass
         else:
@@ -109,7 +120,7 @@ class TestDistance(unittest.TestCase):
                 self.x[int(open_begin)][int(open_end)],
                 self.y[int(open_begin)][int(open_end)],
                 "euclidean",win_name,win_size,pattern,
-                False,open_begin,open_end,False
+                False,open_begin,open_end
             )
             # assert
             assert_almost_equal(rdtw.distance,pydtw.distance)
@@ -133,7 +144,7 @@ class TestDistance(unittest.TestCase):
                             self._assert_dist(pattern,win_name,win_size,open_begin,open_end)
 
     def test_symmetric_distance(self):
-        """symmetric distance (except for symmetric1 because it's not normalizable)
+        """symmetric distance
         """
         sym_patterns = [pattern for pattern in self.patterns if pattern.find("symmetric") == 0]
         # sym_patterns.remove("symmetric1")

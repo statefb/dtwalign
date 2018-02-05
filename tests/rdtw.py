@@ -55,9 +55,9 @@ class DtwR(BaseDtw):
         self.distance_only = distance_only
         self.open_end = open_end
         self.open_begin = open_begin
-        # parameter check
-        if self.window_type is not None and window_size is None:
-            raise ValueError("must specify window_size if window_type is not None.")
+        # # parameter check
+        # if self.window_type is not None and window_size is None:
+        #     raise ValueError("must specify window_size if window_type is not None.")
         """"""
         if rdtw is None:
             # rdtw package object
@@ -118,4 +118,19 @@ class DtwR(BaseDtw):
         elif step_pattern_str == "asymmetricP05":return rdtw.asymmetricP05
         elif step_pattern_str == "asymmetricP2":return rdtw.asymmetricP2
         elif step_pattern_str == "asymmetricP1":return rdtw.asymmetricP1
+        elif step_pattern_str == "typeIa":return rdtw.typeIa
+        elif step_pattern_str == "typeIb":return rdtw.typeIb
+        elif step_pattern_str == "typeIc":return rdtw.typeIc
+        elif step_pattern_str == "typeId":return rdtw.typeId
+        elif step_pattern_str == "typeIas":return rdtw.typeIas
+        elif step_pattern_str == "typeIbs":return rdtw.typeIbs
+        elif step_pattern_str == "typeIcs":return rdtw.typeIcs
+        elif step_pattern_str == "typeIds":return rdtw.typeIds
+        elif step_pattern_str == "typeIIa":return rdtw.typeIIa
+        elif step_pattern_str == "typeIIb":return rdtw.typeIIb
+        elif step_pattern_str == "typeIIc":return rdtw.typeIIc
+        elif step_pattern_str == "typeIId":return rdtw.typeIId
+        elif step_pattern_str == "typeIIIc":return rdtw.typeIIIc
+        elif step_pattern_str == "typeIVc":return rdtw.typeIVc
+        elif step_pattern_str == "mori2006":return rdtw.mori2006
         else:raise NotImplementedError()

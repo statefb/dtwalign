@@ -582,11 +582,11 @@ class TypeIIb(BasePattern):
     pattern_info = [
         dict(
             indices = [(-1,-1),(0,0)],
-            weights = [2]
+            weights = [1]
         ),
         dict(
             indices = [(-1,-2),(0,0)],
-            weights = [1]
+            weights = [2]
         ),
         dict(
             indices = [(-2,-1),(0,0)],
@@ -607,11 +607,11 @@ class TypeIIc(BasePattern):
         ),
         dict(
             indices = [(-1,-2),(0,0)],
-            weights = [2]
+            weights = [1]
         ),
         dict(
             indices = [(-2,-1),(0,0)],
-            weights = [1]
+            weights = [2]
         ),
     ]
     normalize_guide = "none"
