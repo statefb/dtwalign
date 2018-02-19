@@ -5,12 +5,12 @@ from setuptools import find_packages
 
 # meta info
 NAME = "dtwalign"
-VERSION = "0.0.7"
+VERSION = "0.0.8"
 AUTHOR = "Takehiro Suzuki"
 AUTHOR_EMAIL = ""
 URL = "https://github.com/statefb/dtwalign"
 DESCRIPTION = 'Comprehensive DTW package which enables partial mathing and has various constraint options'
-LICENSE = "GPL v2"
+LICENSE = "MIT"
 
 if not os.path.exists('README.txt'):
     os.system("pandoc -o README.txt README.md")
