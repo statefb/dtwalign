@@ -5,7 +5,7 @@ from setuptools import find_packages
 
 # meta info
 NAME = "dtwalign"
-VERSION = "0.0.8"
+VERSION = "0.0.9"
 AUTHOR = "Takehiro Suzuki"
 AUTHOR_EMAIL = ""
 URL = "https://github.com/statefb/dtwalign"
@@ -46,7 +46,6 @@ def main():
         classifiers = [
             "Programming Language :: Python :: 3.5",
             "Programming Language :: Python :: 3.6",
-            "License :: OSI Approved :: GNU General Public License v2 (GPLv2)",
             "Topic :: Scientific/Engineering",
         ]
     )
