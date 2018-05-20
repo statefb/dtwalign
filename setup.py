@@ -5,7 +5,7 @@ from setuptools import find_packages
 
 # meta info
 NAME = "dtwalign"
-VERSION = "0.0.9"
+VERSION = "0.1.0"
 AUTHOR = "Takehiro Suzuki"
 AUTHOR_EMAIL = ""
 URL = "https://github.com/statefb/dtwalign"
@@ -25,7 +25,7 @@ def main():
         author_email=AUTHOR_EMAIL,
         url=URL,
         description=DESCRIPTION,
-        long_description = LONG_DESCRIPTION,
+        long_description=LONG_DESCRIPTION,
         zip_safe=False,
         include_package_data=True,
         packages=find_packages(),
@@ -37,13 +37,16 @@ def main():
             "numba >= 0.34.0",
             "scipy"
         ],
-        dependency_links = [
+        dependency_links=[
 
         ],
-        tests_require=[],
+        tests_require=[
+            "rpy2",
+        ],
         setup_requires=[],
         license=LICENSE,
-        classifiers = [
+        test_suite="tests",
+        classifiers=[
             "Programming Language :: Python :: 3.5",
             "Programming Language :: Python :: 3.6",
             "Topic :: Scientific/Engineering",

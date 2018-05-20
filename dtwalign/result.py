@@ -5,7 +5,8 @@ import seaborn as sns
 from scipy.interpolate import interp1d
 
 class DtwResult():
-    def __init__(self,cumsum_matrix,path,window,pattern):
+    """Result class."""
+    def __init__(self, cumsum_matrix, path, window, pattern):
         self.cumsum_matrix = cumsum_matrix
 
         if path is None:
@@ -17,8 +18,8 @@ class DtwResult():
         self._window = window
         self._pattern = pattern
 
-    def get_warping_path(self,target="query"):
-        """get warping path
+    def get_warping_path(self, target="query"):
+        """Get warping path.
 
         Parameters
         ----------
@@ -34,20 +35,22 @@ class DtwResult():
         -----
 
         """
-        if target not in ("query","reference"):
+        if target not in ("query", "reference"):
             raise ValueError("target argument must be 'query' or 'reference'")
         if target == "reference":
-            xp = self.path[:,0]  # query path
-            yp = self.path[:,1]  # reference path
+            xp = self.path[:, 0]  # query path
+            yp = self.path[:, 1]  # reference path
         else:
-            yp = self.path[:,0]  # query path
-            xp = self.path[:,1]  # reference path
-        interp_func = interp1d(xp,yp,kind="linear")
+            yp = self.path[:, 0]  # query path
+            xp = self.path[:, 1]  # reference path
+        interp_func = interp1d(xp, yp, kind="linear")
         # get warping index as float values and then convert to int
         # note: Ideally, the warped value should be calculated as mean.
         #       (in this implementation, just use value corresponds to rounded-up index)
-        warping_index = interp_func(np.arange(xp.min(),xp.max()+1)).astype(np.int64)
-        warping_index[0] = yp.min() # the most left side gives nan, so substitute first index of path
+        warping_index = interp_func(np.arange(xp.min(), xp.max()+1)).astype(np.int64)
+        # the most left side gives nan, so substitute first index of path
+        warping_index[0] = yp.min()
+
         return warping_index
 
     def plot_window(self):
@@ -58,9 +61,9 @@ class DtwResult():
         masked_array = np.ma.masked_array(self.cumsum_matrix,
             mask=self.cumsum_matrix == np.inf)
         _,ax = plt.subplots(1)
-        sns.heatmap(self.cumsum_matrix.T,vmax=masked_array.max(),vmin=0,\
-            xticklabels=self.cumsum_matrix.shape[0]//10,\
-            yticklabels=self.cumsum_matrix.shape[1]//10,\
+        sns.heatmap(self.cumsum_matrix.T, vmax=masked_array.max(), vmin=0,
+            xticklabels=self.cumsum_matrix.shape[0]//10,
+            yticklabels=self.cumsum_matrix.shape[1]//10,
             ax=ax
         )
         ax.invert_yaxis()
@@ -69,8 +72,8 @@ class DtwResult():
         ax.set_title("cumsum matrix")
         plt.show()
 
-    def plot_path(self,with_="cum"):
-        """plot alignment path
+    def plot_path(self, with_="cum"):
+        """Plot alignment path.
 
         Parameters
         ----------
@@ -82,27 +85,25 @@ class DtwResult():
         """
         if self.dist_only:
             raise Exception("alignment path not calculated.")
-        _,ax = plt.subplots(1)
+        _, ax = plt.subplots(1)
         if with_ is None:
-            ax.plot(self.path[:,0],self.path[:,1])
+            ax.plot(self.path[:, 0], self.path[:, 1])
         elif with_ == "win":
-            sns.heatmap(self._window.matrix.T,vmin=0,vmax=1,\
-                xticklabels=self._window.matrix.shape[0]//10,\
-                yticklabels=self._window.matrix.shape[1]//10,\
-                ax=ax
-            )
-            ax.plot(self.path[:,0],self.path[:,1],"b")
+            sns.heatmap(self._window.matrix.T, vmin=0, vmax=1,
+                xticklabels=self._window.matrix.shape[0]//10,
+                yticklabels=self._window.matrix.shape[1]//10,
+                ax=ax)
+            ax.plot(self.path[:, 0], self.path[:, 1], "b")
             ax.invert_yaxis()
         elif with_ == "cum":
             # extract max value with ignoring inf
             masked_array = np.ma.masked_array(self.cumsum_matrix,
                 mask=self.cumsum_matrix == np.inf)
-            sns.heatmap(self.cumsum_matrix.T,vmax=masked_array.max(),vmin=0,\
-                xticklabels=self.cumsum_matrix.shape[0]//10,\
-                yticklabels=self.cumsum_matrix.shape[1]//10,\
-                ax=ax
-            )
-            ax.plot(self.path[:,0],self.path[:,1],"y")
+            sns.heatmap(self.cumsum_matrix.T, vmax=masked_array.max(), vmin=0,
+                xticklabels=self.cumsum_matrix.shape[0]//10,
+                yticklabels=self.cumsum_matrix.shape[1]//10,
+                ax=ax)
+            ax.plot(self.path[:, 0], self.path[:, 1], "y")
             ax.invert_yaxis()
         else:
             raise NotImplementedError("'with_' argument only supports: 'win','cum'")
@@ -110,7 +111,6 @@ class DtwResult():
         ax.set_xlabel("query index")
         ax.set_ylabel("reference index")
         plt.show()
-
 
     def plot_pattern(self):
         self._pattern.plot()

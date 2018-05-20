@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-"""
+"""A complehensive dynamic time warping package.
+
 The MIT License (MIT)
 
 Copyright (c) 2018 statefb.
@@ -23,6 +24,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 """
 
+import numpy as np
 from scipy.spatial.distance import cdist
 from .cost import _calc_cumsum_matrix_jit
 from .backtrack import _backtrack_jit
@@ -31,9 +33,10 @@ from .window import *
 from .result import DtwResult
 from .distance import _get_alignment_distance
 
-def dtw(x,y,dist="euclidean",window_type="none",window_size=None,step_pattern="symmetric2",\
-    dist_only=False,open_begin=False,open_end=False):
-    """Perform dtw
+
+def dtw(x, y, dist="euclidean", window_type="none", window_size=None,
+    step_pattern="symmetric2", dist_only=False, open_begin=False, open_end=False):
+    """Perform dtw.
 
     Parameters
     ----------
@@ -75,26 +78,27 @@ def dtw(x,y,dist="euclidean",window_type="none",window_size=None,step_pattern="s
     """
     len_x = x.shape[0]; len_y = y.shape[0]
     # if 1D array, convert to 2D array
-    if x.ndim == 1: x = x[:,np.newaxis]
-    if y.ndim == 1: y = y[:,np.newaxis]
+    if x.ndim == 1: x = x[:, np.newaxis]
+    if y.ndim == 1: y = y[:, np.newaxis]
 
     # get pair-wise cost matrix
     if type(dist) == str:
         # scipy
-        X = cdist(x,y,metric=dist)
+        X = cdist(x, y, metric=dist)
     else:
         # user defined metric
-        window = _get_window(window_type,window_size,len_x,len_y)
-        X = np.ones([len_x,len_y]) * np.inf
-        for i,j in window.list:
-            X[i,j] = dist(x[i,:],y[j,:])
+        window = _get_window(window_type, window_size, len_x, len_y)
+        X = np.ones([len_x, len_y]) * np.inf
+        for i, j in window.list:
+            X[i, j] = dist(x[i, :], y[j, :])
 
-    return dtw_from_distance_matrix(X,window_type,window_size,step_pattern,dist_only,\
-        open_begin,open_end)
+    return dtw_from_distance_matrix(X, window_type, window_size, step_pattern,
+        dist_only, open_begin, open_end)
 
-def dtw_from_distance_matrix(X,window_type="none",window_size=None,step_pattern="symmetric2",\
-    dist_only=False,open_begin=False,open_end=False):
-    """Perform dtw using pre-computed pair-wise distance matrix
+
+def dtw_from_distance_matrix(X, window_type="none", window_size=None,
+    step_pattern="symmetric2", dist_only=False, open_begin=False, open_end=False):
+    """Perform dtw using pre-computed pair-wise distance matrix.
 
     Parameters
     ----------
@@ -104,14 +108,15 @@ def dtw_from_distance_matrix(X,window_type="none",window_size=None,step_pattern=
     others : see dtw function
 
     """
-    len_x,len_y = X.shape
-    window = _get_window(window_type,window_size,len_x,len_y)
+    len_x, len_y = X.shape
+    window = _get_window(window_type, window_size, len_x, len_y)
     pattern = _get_pattern(step_pattern)
-    return dtw_low(X,window,pattern,dist_only,open_begin,open_end)
+    return dtw_low(X, window, pattern, dist_only, open_begin, open_end)
 
-def dtw_low(X,window,pattern,dist_only=False,\
-    open_begin=False,open_end=False):
-    """Low-level dtw interface
+
+def dtw_low(X, window, pattern, dist_only=False,
+    open_begin=False, open_end=False):
+    """Low-level dtw interface.
 
     Parameters
     ----------
@@ -130,9 +135,9 @@ def dtw_low(X,window,pattern,dist_only=False,\
     # validation
     if X[X < 0].sum() != 0:
         raise ValueError("pair-wise cost matrix must NOT contain negative values")
-    if not isinstance(window,BaseWindow):
+    if not isinstance(window, BaseWindow):
         raise ValueError("window argument must be Window object")
-    if not isinstance(pattern,BasePattern):
+    if not isinstance(pattern, BasePattern):
         raise ValueError("pattern argument must be Pattern object")
     if open_begin:
         if not pattern.normalize_guide == "N":
@@ -142,38 +147,41 @@ def dtw_low(X,window,pattern,dist_only=False,\
             raise ValueError("open-end alignment requires normalizable step pattern")
 
     # compute cumsum distance matrix
-    D = _calc_cumsum_matrix_jit(X,window.list,pattern.array,open_begin)
+    D = _calc_cumsum_matrix_jit(X, window.list, pattern.array, open_begin)
     # get alignment distance
-    dist,normalized_dist,last_idx = _get_alignment_distance(D,pattern,open_begin,open_end)
+    dist, normalized_dist, last_idx = _get_alignment_distance(D, pattern,
+        open_begin, open_end)
 
     if dist_only:
         path = None
         if open_begin:
-            D = D[1:,:]
+            D = D[1:, :]
     else:
         # backtrack to obtain warping path
-        path = _backtrack_jit(D,pattern.array,last_idx)
+        path = _backtrack_jit(D, pattern.array, last_idx)
         if open_begin:
-            D = D[1:,:]
-            path = path[1:,:]
-            path[:,0] -= 1
+            D = D[1:, :]
+            path = path[1:, :]
+            path[:, 0] -= 1
 
-    result = DtwResult(D,path,window,pattern)
+    result = DtwResult(D, path, window, pattern)
     # set distance properties
     result.distance = dist
     result.normalized_distance = normalized_dist
 
     return result
 
-def _get_window(window_type,window_size,len_x,len_y):
+
+def _get_window(window_type, window_size, len_x, len_y):
     if window_type == "sakoechiba":
-        return SakoechibaWindow(len_x,len_y,window_size)
+        return SakoechibaWindow(len_x, len_y, window_size)
     elif window_type == "itakura":
-        return ItakuraWindow(len_x,len_y)
+        return ItakuraWindow(len_x, len_y)
     elif window_type == "none":
-        return NoWindow(len_x,len_y)
+        return NoWindow(len_x, len_y)
     else:
         raise NotImplementedError("given window type not supported")
+
 
 def _get_pattern(pattern_str):
     if pattern_str == "symmetric1":
