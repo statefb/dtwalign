@@ -2,6 +2,7 @@
 [![Documentation Status](https://readthedocs.org/projects/dtwalign/badge/?version=latest)](https://dtwalign.readthedocs.io/en/latest/?badge=latest)
       
 Comprehensive dynamic time warping module for python.
+Documentation is [available via ReadTheDocs](https://dtwalign.readthedocs.io/en/latest/index.html).
 
 ## Installation
 ```

@@ -15,11 +15,6 @@ Installation
 pip install dtwalign
 ```
 
-Fast computation
-----------------
-
-by [Numba](https://numba.pydata.org)
-
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
