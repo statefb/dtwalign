@@ -11,9 +11,10 @@ Comprehensive dynamic time warping module for python.
 
 Installation
 ============
-```
-pip install dtwalign
-```
+::
+
+    pip install dtwalign
+
 
 .. toctree::
    :maxdepth: 2
