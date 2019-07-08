@@ -17,7 +17,6 @@ if not os.path.exists('README.txt'):
 LONG_DESCRIPTION = open('README.txt').read()
 
 def main():
-
     setup(
         name=NAME,
         version=VERSION,
