@@ -3,17 +3,33 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
+====================================
 Welcome to dtwalign's documentation!
 ====================================
+
+Comprehensive dynamic time warping module for python.
+
+Installation
+============
+```
+pip install dtwalign
+```
+
+Fast computation
+----------------
+
+by [Numba](https://numba.pydata.org)
 
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
 
-   modules
+   features
+   tutorial
+   api
 
 
-
+==================
 Indices and tables
 ==================
 
