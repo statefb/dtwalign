@@ -5,7 +5,7 @@ import seaborn as sns
 from scipy.interpolate import interp1d
 
 class DtwResult():
-    """Result class."""
+    """Result of DTW."""
     def __init__(self, cumsum_matrix, path, window, pattern):
         self.cumsum_matrix = cumsum_matrix
 
@@ -30,9 +30,6 @@ class DtwResult():
         -------
         warping_index : 1D array
             warping index
-
-        Notes
-        -----
 
         """
         if target not in ("query", "reference"):
@@ -77,7 +74,7 @@ class DtwResult():
 
         Parameters
         ----------
-        with_ : "win","cum" or None
+        with_ : "win", "cum" or None
             if given, following will be plotted with alignment path
             "win" : window matrix
             "cum" : cumsum matrix

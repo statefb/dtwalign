@@ -72,15 +72,18 @@ def _gen_itakura_window(len_x, len_y):
 class UserWindow(BaseWindow):
     label = "user defined window"
     def __init__(self, len_x, len_y, win_func, *args, **kwargs):
-        """user defined window
+        """Initialize user defined window.
 
         Parameters
         ----------
-        len_x : length of query
-        len_y : length of reference
-        win_func : function
-            any function which returns bool
-        *args,**kwargs : arguments for win_func
+        len_x : int
+            length of query.
+        len_y : int
+            length of reference.
+        win_func : callable
+            any function which returns bool.
+        *args, **kwargs : 
+            arguments for win_func
 
         """
         self._gen_window(len_x, len_y, win_func, *args, **kwargs)

@@ -28,6 +28,8 @@ class BasePattern():
         return self.normalize_guide != "none"
 
     def plot(self):
+        """Show step pattern.
+        """
         plt.figure(figsize=(6,6))
         if not hasattr(self, "_graph"):
             self._gen_graph()

@@ -74,6 +74,11 @@ def dtw(x, y, dist="euclidean", window_type="none", window_size=None,
         Whether or not perform open-ended alignment at the end point of
         query time series. If true, partial alignment will be performed.
 
+    Returns
+    -------
+    dtwalign.result.DtwResult
+        result obj.
+
     """
     len_x = x.shape[0]; len_y = y.shape[0]
     # if 1D array, convert to 2D array
@@ -102,9 +107,14 @@ def dtw_from_distance_matrix(X, window_type="none", window_size=None,
     Parameters
     ----------
     X : 2D array
-        pre-computed pair-wise distance matrix
+        pre-computed pair-wise distance matrix.
 
-    others : see dtw function
+    others : see `dtw` function.
+
+    Returns
+    -------
+    dtwalign.result.DtwResult
+        result obj.
 
     """
     len_x, len_y = X.shape
@@ -120,15 +130,20 @@ def dtw_low(X, window, pattern, dist_only=False,
     Parameters
     ----------
     X : 2D array
-        pair-wise distance matrix
+        pair-wise distance matrix.
 
     window : dtwalign.window.BaseWindow object
-        window object
+        window object.
 
     pattern : dtwalign.step_pattern.BasePattern object
-        step pattern object
+        step pattern object.
 
-    others : see dtw function
+    others : see `dtw` function.
+
+    Returns
+    -------
+    dtwalign.result.DtwResult
+        result obj.
 
     """
     # validation
