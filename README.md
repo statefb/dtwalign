@@ -16,11 +16,11 @@ by [Numba](https://numba.pydata.org)
 ---
   - before alignment
 
-![](img/partial_org.png)
+![](docs/img/partial_org.png)
 
   - after alignment
 
-![](img/partial_res.png)
+![](docs/img/partial_res.png)
 
 ### Local constraint (step pattern)
 ---
@@ -28,7 +28,7 @@ example:
 
 | Symmetric2 | AsymmetricP2 | TypeIVc |
 |:-----------:|:------------:|:------------:|
-| ![](img/symmetric2.png) | ![](img/asymmetricP2.png) | ![](img/typeIVc.png) |
+| ![](docs/img/symmetric2.png) | ![](docs/img/asymmetricP2.png) | ![](docs/img/typeIVc.png) |
 
 ### Global constraint (windowing)
 ---
@@ -36,11 +36,11 @@ example:
 
 | Sakoechiba | Itakura | User defined |
 |:-----------:|:------------:|:------------:|
-| ![](img/sakoechiba.png) | ![](img/itakura.png) | ![](img/user_win.png) |
+| ![](docs/img/sakoechiba.png) | ![](docs/img/itakura.png) | ![](docs/img/user_win.png) |
 
 ### Alignment path visualization
 ---
-![](img/partial_path.png)
+![](docs/img/partial_path.png)
 
 ## Usage
 see [example](https://htmlpreview.github.io/?https://github.com/statefb/dtwalign/blob/master/example/example.html)
