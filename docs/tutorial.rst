@@ -26,7 +26,7 @@ Firstly, let's generate toy data for this tutorial.
 
 .. image:: img/tutorial/toy_data.png
 
-Then run :func:`dtwalign.dtw` method which returns :func:`~dtwalign.result.DtwResult` object.
+Then run :func:`~dtwalign.dtw` method which returns :class:`~dtwalign.result.DtwResult` object.
 
 .. code-block:: python
 
