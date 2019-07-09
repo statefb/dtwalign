@@ -46,15 +46,14 @@ def dtw(x, y, dist="euclidean", window_type="none", window_size=None,
         Reference time series.
 
     dist : string or callable
-        Define how to calclulate pair-wise distance between x and y.  
-        * string: metric argument of ``scipy.spatial.distance``  
-        * callable: user function that defines metric between two samples.  
-          ex) lambda x, y : np.sqrt((x - y)**2)
+        Define how to calclulate pair-wise distance between x and y. If 
+        a string given, it will be interpreted as metric argument of ``scipy.spatial.distance``.
+        If callable that defines metric between two samples, it will be used to compute distance matrix.
 
     window_type : string
         Window type to use.  
-        * "sakoechiba": Sakoechiba window
-        * "itakura": Itakura window
+        If "sakoechiba" given, Sakoechiba window will be used.
+        If "itakura" given, Itakura window will be used.
 
     window_size : int
         Window size to use for Sakoechiba window.

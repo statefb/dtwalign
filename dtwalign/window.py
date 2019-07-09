@@ -31,6 +31,9 @@ class NoWindow(BaseWindow):
     label = "no window"
     def __init__(self, len_x, len_y):
         """No window class which will be used for no constraint.
+
+        Parameters
+        ----------
         len_x : int
             Length of query.
         len_y : int
@@ -48,6 +51,9 @@ class SakoechibaWindow(BaseWindow):
     label = "sakoechiba window"
     def __init__(self, len_x, len_y, size):
         """Sakoechiba window.
+        
+        Parameters
+        ----------
         len_x : int
             Length of query.
         len_y : int
@@ -69,6 +75,9 @@ class ItakuraWindow(BaseWindow):
     label = "itakura window"
     def __init__(self, len_x, len_y):
         """Itakura window.
+
+        Parameters
+        ----------
         len_x : int
             Length of query.
         len_y : int
