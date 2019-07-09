@@ -39,7 +39,7 @@ Then run :func:`~dtwalign.dtw` method which returns :class:`~dtwalign.result.Dtw
 DTW distance
 ------------
 
-DTW distance can be refered via ``DtwResult`` object.
+DTW distance can be refered via :class:`~dtwalign.result.DtwResult` object.
 
 .. code-block:: python
 
@@ -55,7 +55,7 @@ DTW distance can be refered via ``DtwResult`` object.
 Alignment path
 --------------
 
-``DtwResult`` object offers a method which visualize alignment path with cumsum cost matrix.
+:class:`~dtwalign.result.DtwResult` object offers a method which visualize alignment path with cumsum cost matrix.
 
 .. code-block:: python
 
@@ -103,7 +103,7 @@ Advanced Usage
 Global constraint
 -----------------
 
-``dtw`` method can take ``window_type`` parameter to constrain
+:func:`~dtwalign.dtw` method can take ``window_type`` parameter to constrain
 the warping path globally which is also known as 'windowing'.
 
 .. code-block:: python
@@ -168,7 +168,7 @@ Following step patterns are supported:
 Partial alignment
 -----------------
 
-``dtw`` method also be able to perform partial matching algorithm
+:func:`~dtwalign.dtw` method also be able to perform partial matching algorithm
 by setting ``open_begin`` and ``open_end``.
 Before see example code, let's make toy data via following:
 

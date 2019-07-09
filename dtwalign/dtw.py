@@ -45,16 +45,16 @@ def dtw(x, y, dist="euclidean", window_type="none", window_size=None,
     y : 1D or 2D array (sample * feature)
         Reference time series.
 
-    dist : string or function
-        Define how to calclulate pair-wise distance between x and y.
-        string - metric argument of scipy.spatial.distance
-        function - user function that defines metric between two samples.
-            ex) euclidean distance: user_func = lambda x,y : np.sqrt((x-y)**2)
+    dist : string or callable
+        Define how to calclulate pair-wise distance between x and y.  
+        * string: metric argument of ``scipy.spatial.distance``  
+        * callable: user function that defines metric between two samples.  
+          ex) lambda x, y : np.sqrt((x - y)**2)
 
     window_type : string
-        Window type to use.
-        "sakoechiba" - Sakoechiba window
-        "itakura" - Itakura window
+        Window type to use.  
+        * "sakoechiba": Sakoechiba window
+        * "itakura": Itakura window
 
     window_size : int
         Window size to use for Sakoechiba window.
@@ -63,15 +63,15 @@ def dtw(x, y, dist="euclidean", window_type="none", window_size=None,
         Step pattern to use.
 
     dist_only : bool
-        Whether or not to obtain warping path. If true,
+        Whether or not to obtain warping path. If true,  
         only alignment distance will be calculated.
 
     open_begin : bool
-        Whether or not perform open-ended alignment at the starting point of
+        Whether or not perform open-ended alignment at the starting point of  
         query time series. If true, partial alignment will be performed.
 
     open_end : bool
-        Whether or not perform open-ended alignment at the end point of
+        Whether or not perform open-ended alignment at the end point of  
         query time series. If true, partial alignment will be performed.
 
     Returns
@@ -109,7 +109,8 @@ def dtw_from_distance_matrix(X, window_type="none", window_size=None,
     X : 2D array
         Pre-computed pair-wise distance matrix.
 
-    others : see `dtw` function.
+    others : 
+        see :func:`~dtwalign.dtw` function.
 
     Returns
     -------
@@ -138,7 +139,8 @@ def dtw_low(X, window, pattern, dist_only=False,
     pattern : dtwalign.step_pattern.BasePattern object
         step pattern object.
 
-    others : see `dtw` function.
+    others : 
+        see :func:`~dtwalign.dtw` function.
 
     Returns
     -------

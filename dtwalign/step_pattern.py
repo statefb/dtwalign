@@ -782,8 +782,9 @@ class UserStepPattern(BasePattern):
         Parameters
         ----------
         pattern_info : list
-            list contains pattern information.
-            ex) the case of symmetric2 pattern:
+            list contains pattern information.  
+            ex) the case of symmetric2 pattern:  
+                ```
                 pattern_info = [
                     dict(
                         indices=[(-1,0),(0,0)],
@@ -798,9 +799,10 @@ class UserStepPattern(BasePattern):
                         weights=[1]
                     )
                 ]
+                ```
 
         normalize_guide : string ('N','M','N+M','none')
-            guide to compute normalized distance.
+            Guide to compute normalized distance.
 
         """
         # validation

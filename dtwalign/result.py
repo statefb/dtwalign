@@ -5,7 +5,20 @@ import seaborn as sns
 from scipy.interpolate import interp1d
 
 class DtwResult():
-    """Result of DTW."""
+    """Result of DTW.
+    
+    Attributes
+    ----------
+    path : 2d array
+        Alignment path.  
+        * First column: query path array
+        * Second column: reference path array
+    distance : float
+        Alignment distance.
+    normalized_distance : float
+        Normalized alignment distance.
+
+    """
     def __init__(self, cumsum_matrix, path, window, pattern):
         self.cumsum_matrix = cumsum_matrix
 
@@ -23,7 +36,7 @@ class DtwResult():
 
         Parameters
         ----------
-        target : "query" or "reference"
+        target : string, "query" or "reference"
             Specify the target to be warped.
 
         Returns
@@ -74,7 +87,7 @@ class DtwResult():
 
         Parameters
         ----------
-        with_ : "win", "cum" or None
+        with_ : string, "win" or "cum" or None
             If given, following will be plotted with alignment path:  
             * "win" : window matrix
             * "cum" : cumsum matrix

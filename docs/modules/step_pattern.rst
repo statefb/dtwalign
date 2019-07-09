@@ -1,3 +1,5 @@
+.. module:: dtwalign.step_pattern
+
 =============
 Step patterns
 =============

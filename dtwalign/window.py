@@ -13,6 +13,8 @@ class BaseWindow():
         pass
 
     def plot(self):
+        """Show window.
+        """
         _, ax = plt.subplots(1)
         sns.heatmap(self.matrix.T, vmin=0, vmax=1,
             xticklabels=self.matrix.shape[0]//10,
@@ -28,6 +30,13 @@ class BaseWindow():
 class NoWindow(BaseWindow):
     label = "no window"
     def __init__(self, len_x, len_y):
+        """No window class which will be used for no constraint.
+        len_x : int
+            Length of query.
+        len_y : int
+            Length of reference.
+
+        """
         self._gen_window(len_x, len_y)
 
     def _gen_window(self, len_x, len_y):
@@ -38,6 +47,15 @@ class NoWindow(BaseWindow):
 class SakoechibaWindow(BaseWindow):
     label = "sakoechiba window"
     def __init__(self, len_x, len_y, size):
+        """Sakoechiba window.
+        len_x : int
+            Length of query.
+        len_y : int
+            Length of reference.
+        size : int
+            Size of window width.
+            
+        """
         self._gen_window(len_x, len_y, size)
 
     def _gen_window(self, len_x, len_y, size):
@@ -50,6 +68,13 @@ class SakoechibaWindow(BaseWindow):
 class ItakuraWindow(BaseWindow):
     label = "itakura window"
     def __init__(self, len_x, len_y):
+        """Itakura window.
+        len_x : int
+            Length of query.
+        len_y : int
+            Length of reference.
+            
+        """
         self._gen_window(len_x, len_y)
 
     def _gen_window(self, len_x, len_y):
@@ -77,13 +102,13 @@ class UserWindow(BaseWindow):
         Parameters
         ----------
         len_x : int
-            length of query.
+            Length of query.
         len_y : int
-            length of reference.
+            Length of reference.
         win_func : callable
-            any function which returns bool.
+            Any function which returns bool.
         *args, **kwargs : 
-            arguments for win_func
+            Arguments for win_func
 
         """
         self._gen_window(len_x, len_y, win_func, *args, **kwargs)
