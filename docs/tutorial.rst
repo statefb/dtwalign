@@ -26,7 +26,7 @@ Firstly, let's generate toy data for this tutorial.
 
 .. image:: img/tutorial/toy_data.png
 
-Then run dtw method which returns DtwResult object.
+Then run :func:`~dtwalign.dtw` method which returns :func:`~dtwalign.result.DtwResult` object.
 
 .. code-block:: python
 
@@ -39,7 +39,7 @@ Then run dtw method which returns DtwResult object.
 DTW distance
 ------------
 
-DTW distance can be refered via DtwResult object.
+DTW distance can be refered via ``DtwResult`` object.
 
 .. code-block:: python
 
@@ -55,7 +55,7 @@ DTW distance can be refered via DtwResult object.
 Alignment path
 --------------
 
-DtwResult object offers a method which visualize alignment path with cumsum cost matrix.
+``DtwResult`` object offers a method which visualize alignment path with cumsum cost matrix.
 
 .. code-block:: python
 
@@ -63,7 +63,7 @@ DtwResult object offers a method which visualize alignment path with cumsum cost
 
 .. image:: img/tutorial/alignment_path.png
 
-Alignment path array also provided:
+Alignment path array is also provided:
 
 .. code-block:: python
 
@@ -73,7 +73,7 @@ Alignment path array also provided:
 Warp one to the other
 ---------------------
 
-`get_warping_path` method provides an alignment path of X with fixed Y and vice versa.
+:func:`~dtwalign.result.DtwResult.get_warping_path` method provides an alignment path of X with fixed Y and vice versa.
 
 .. code-block:: python
 
@@ -103,7 +103,7 @@ Advanced Usage
 Global constraint
 -----------------
 
-`dtw` method can take `window_type` parameter to constrain
+``dtw`` method can take ``window_type`` parameter to constrain
 the warping path globally which is also known as 'windowing'.
 
 .. code-block:: python
@@ -126,7 +126,7 @@ the warping path globally which is also known as 'windowing'.
 Local constraint
 ----------------
 
-`dtwalign` package also supports local constrained optimization
+``dtwalign`` package also supports local constrained optimization
 which is also known as 'step pattern'.
 Following step patterns are supported:
 
@@ -168,8 +168,8 @@ Following step patterns are supported:
 Partial alignment
 -----------------
 
-`dtw` method also be able to perform partial matching algorithm
-by setting `open_begin` and `open_end`.
+``dtw`` method also be able to perform partial matching algorithm
+by setting ``open_begin`` and ``open_end``.
 Before see example code, let's make toy data via following:
 
 .. code-block:: python
@@ -186,7 +186,7 @@ Before see example code, let's make toy data via following:
 
 .. image:: img/tutorial/toy_data_partial.png
 
-Open-end alignment can be performed by letting `open_end` True.
+Open-end alignment can be performed by letting ``open_end`` be ``True``.
 
 .. code-block:: python
 
@@ -195,7 +195,7 @@ Open-end alignment can be performed by letting `open_end` True.
 
 .. image:: img/tutorial/open_end.png
 
-As above, let `open_begin` True to run open-begin alignment.
+As above, let ``open_begin`` be ``True`` to run open-begin alignment.
 
 .. note::
     Open-begin requires "N" normalizable pattern.  
@@ -210,7 +210,7 @@ As above, let `open_begin` True to run open-begin alignment.
 
 .. code-block:: python
 
-    res = dtw(x_partial,y_partial,step_pattern="asymmetric",open_begin=True,open_end=True)
+    res = dtw(x_partial, y_partial, step_pattern="asymmetric", open_begin=True, open_end=True)
     res.plot_path()
 
 .. image:: img/tutorial/open_begin_end.png
@@ -219,7 +219,7 @@ Use other metric
 ----------------
 
 You can use other pair-wise distance metric (default is euclidean).
-Metrics in `scipy.spatial.distance.cdist` are supported:
+Metrics in ``scipy.spatial.distance.cdist`` are supported:
 
 .. code-block:: python
 
@@ -241,7 +241,7 @@ You can also calculate DTW with given pre-computed distance matrix like:
 
     # calculate pair-wise distance matrix in advance
     from scipy.spatial.distance import cdist
-    X = cdist(x[:,np.newaxis], y[:,np.newaxis], metric="euclidean")
+    X = cdist(x[:, np.newaxis], y[:, np.newaxis], metric="euclidean")
 
     # use `dtw_from_distance_matrix` method for computation.
     from dtwalign import dtw_from_distance_matrix

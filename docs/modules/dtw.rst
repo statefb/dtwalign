@@ -1,7 +1,9 @@
+.. module:: dtwalign.dtw
+
 ===
 DTW
 ===
 
-.. automodule:: dtwalign.dtw
-   :members:
-   :show-inheritance:
+.. autofunction:: dtw
+.. autofunction:: dtw_from_distance_matrix
+.. autofunction:: dtw_low

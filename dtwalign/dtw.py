@@ -77,7 +77,7 @@ def dtw(x, y, dist="euclidean", window_type="none", window_size=None,
     Returns
     -------
     dtwalign.result.DtwResult
-        result obj.
+        Result obj.
 
     """
     len_x = x.shape[0]; len_y = y.shape[0]
@@ -107,14 +107,14 @@ def dtw_from_distance_matrix(X, window_type="none", window_size=None,
     Parameters
     ----------
     X : 2D array
-        pre-computed pair-wise distance matrix.
+        Pre-computed pair-wise distance matrix.
 
     others : see `dtw` function.
 
     Returns
     -------
     dtwalign.result.DtwResult
-        result obj.
+        Result obj.
 
     """
     len_x, len_y = X.shape
@@ -130,7 +130,7 @@ def dtw_low(X, window, pattern, dist_only=False,
     Parameters
     ----------
     X : 2D array
-        pair-wise distance matrix.
+        Pair-wise distance matrix.
 
     window : dtwalign.window.BaseWindow object
         window object.
@@ -143,7 +143,7 @@ def dtw_low(X, window, pattern, dist_only=False,
     Returns
     -------
     dtwalign.result.DtwResult
-        result obj.
+        Result obj.
 
     """
     # validation

@@ -24,12 +24,12 @@ class DtwResult():
         Parameters
         ----------
         target : "query" or "reference"
-            specify the target to be warped
+            Specify the target to be warped.
 
         Returns
         -------
         warping_index : 1D array
-            warping index
+            Warping index.
 
         """
         if target not in ("query", "reference"):
@@ -75,9 +75,9 @@ class DtwResult():
         Parameters
         ----------
         with_ : "win", "cum" or None
-            if given, following will be plotted with alignment path
-            "win" : window matrix
-            "cum" : cumsum matrix
+            If given, following will be plotted with alignment path:  
+            * "win" : window matrix
+            * "cum" : cumsum matrix
 
         """
         if self.dist_only:
