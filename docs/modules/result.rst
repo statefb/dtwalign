@@ -1,7 +1,9 @@
+.. module:: dtwalign.result
+
 ======
 Result
 ======
 
-.. automodule:: dtwalign.result
+.. autoclass:: DtwResult
    :members:
    
