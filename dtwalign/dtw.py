@@ -81,8 +81,12 @@ def dtw(x, y, dist="euclidean", window_type="none", window_size=None,
     """
     len_x = x.shape[0]; len_y = y.shape[0]
     # if 1D array, convert to 2D array
-    if x.ndim == 1: x = x[:, np.newaxis]
-    if y.ndim == 1: y = y[:, np.newaxis]
+    if x.ndim == 1:
+        x = np.array(x)
+        x = x[:, np.newaxis]
+    if y.ndim == 1:
+        y = np.array(y)
+        y = y[:, np.newaxis]
 
     # get pair-wise cost matrix
     if type(dist) == str:
