@@ -1,6 +1,7 @@
 Pipfile
 Pipfile.lock
 docs/_build
+.env
 
 __pycache__
 /dtwalign.egg-info/
