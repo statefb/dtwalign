@@ -2,10 +2,12 @@
 
 [![Documentation Status](https://readthedocs.org/projects/dtwalign/badge/?version=latest)](https://dtwalign.readthedocs.io/en/latest/?badge=latest)
 
-![cicd workflow](https://github.com/statefb/dtwalign/actions/workflows/main.yml/badge.svg)
+![cicd workflow](https://github.com/statefb/dtwalign/actions/workflows/publish.yml/badge.svg)
 
 Comprehensive dynamic time warping module for python.  
 Documentation is [available via ReadTheDocs](https://dtwalign.readthedocs.io/en/latest/index.html).
+
+**Note: Please consider to use [python-dtw](https://dynamictimewarping.github.io/) package which is compatible with [dtw for R](https://cran.r-project.org/web/packages/dtw/index.html).**
 
 ## Installation
 
