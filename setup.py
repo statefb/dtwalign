@@ -1,20 +1,21 @@
 # -*- coding: utf-8 -*-
 import os
-from setuptools import setup
-from setuptools import find_packages
+
+from setuptools import find_packages, setup
 
 # meta info
 NAME = "dtwalign"
-VERSION = "0.1.0"
+VERSION = "0.1.1"
 AUTHOR = "Takehiro Suzuki"
 AUTHOR_EMAIL = ""
 URL = "https://github.com/statefb/dtwalign"
-DESCRIPTION = 'Comprehensive DTW package which enables partial mathing and has various constraint options'
+DESCRIPTION = "Comprehensive DTW package which enables partial mathing and has various constraint options"
 LICENSE = "MIT"
 
-if not os.path.exists('README.txt'):
+if not os.path.exists("README.txt"):
     os.system("pandoc -o README.txt README.md")
-LONG_DESCRIPTION = open('README.txt').read()
+LONG_DESCRIPTION = open("README.txt").read()
+
 
 def main():
     setup(
@@ -34,11 +35,9 @@ def main():
             "seaborn >= 0.8.1",
             "networkx",
             "numba >= 0.34.0",
-            "scipy"
+            "scipy",
         ],
-        dependency_links=[
-
-        ],
+        dependency_links=[],
         tests_require=[
             "rpy2",
         ],
@@ -49,9 +48,9 @@ def main():
             "Programming Language :: Python :: 3.5",
             "Programming Language :: Python :: 3.6",
             "Topic :: Scientific/Engineering",
-        ]
+        ],
     )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
